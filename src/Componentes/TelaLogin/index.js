@@ -21,7 +21,7 @@ function TelaLogin () {
             const { data } = response;
             console.log(data);
             console.log("deu bom");
-            // navigate("/");
+            navigate("/hoje");
         }
         )
         promise.catch(response => {
