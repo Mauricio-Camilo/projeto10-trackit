@@ -25,7 +25,7 @@ function TelaLogin () {
         }
         )
         promise.catch(response => {
-            alert("Falha no envio dos dados, por favor tente novamente");
+            alert("Informações incorretas, digite novamente email e senha");
         })
     }
 
