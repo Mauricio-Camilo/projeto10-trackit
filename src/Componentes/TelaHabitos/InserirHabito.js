@@ -116,6 +116,7 @@ const Actions = styled.div`
             border-radius: 5px;
             margin-left: 19px;
             background-color: var(--cor-botao-footer);
+        }
 `
 
 export default InserirHabito;

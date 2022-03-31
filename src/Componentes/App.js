@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import UserContext from "./contexts/UserContext";
-
 import TelaLogin from "./TelaLogin";
+import TelaLogin2 from "./TelaLogin2";
+import TelaCadastro2 from "./TelaCadastro2";
+
 import TelaCadastro from "./TelaCadastro";
 import TelaHabitos from "./TelaHabitos";
 import TelaHoje from "./TelaHoje";
@@ -15,6 +17,8 @@ function App() {
         <UserContext.Provider value={{ token, setToken }}>
             <BrowserRouter>
                 <Routes>
+                    <Route path="/login2" element={<TelaLogin2 />} />
+                    <Route path="/cadastro2" element={<TelaCadastro2 />} />
                     <Route path="/" element={<TelaLogin />} />
                     <Route path="/cadastro" element={<TelaCadastro />} />
                     <Route path="/habitos" element={<TelaHabitos />} />
