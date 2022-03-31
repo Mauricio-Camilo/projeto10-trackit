@@ -73,7 +73,6 @@ function TelaCadastro() {
                 <p onClick={() => navigate("/")}>Já tem uma conta? Faça login!</p>
 
                 </Container> 
-   
         </>
     )
 }

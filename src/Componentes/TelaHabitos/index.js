@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import UserContext from "../contexts/UserContext";
 
 import styled from "styled-components";
 
@@ -9,21 +10,18 @@ import axios from "axios";
 
 function TelaHabitos() {
 
-    // function construirHabitos() {
-    //   return (  
-    //     <Subtitle>
-    //         <h1>Meus habitos</h1>
-    //         <button>+</button>
-    //     </Subtitle>
-    //   )
-    // }
-
-    // const habitos = construirHabitos();
+    const { token, setToken } = useContext(UserContext);
 
     const API = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
 
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    }
+
     useEffect(() => {
-        const promise = axios.get(API);
+        const promise = axios.get(API, config);
         promise.then(response => {
             const {data} = response;
             console.log("Deu bom");
@@ -33,8 +31,6 @@ function TelaHabitos() {
             console.log("Deu ruim");
         })    
     },[]);
-
-   
 
     const [visivel, setVisivel] = useState(false);
 
@@ -51,7 +47,7 @@ function TelaHabitos() {
                         <h1>Meus habitos</h1>
                         <button>+</button>
                     </Subtitle>
-                    <InserirHabito />
+                    <InserirHabito setVisivel={setVisivel}/>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 </Container>
                 :
@@ -60,7 +56,6 @@ function TelaHabitos() {
                         <h1>Meus habitos</h1>
                         <button onClick={() => setVisivel(true)}>+</button>
                     </Subtitle>
-                    {/* <InserirHabito /> */}
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 </Container>
 
