@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import Header from "../Layout/Header"
+
 function TelaLogin () {
+
+    const {token, setToken} = useContext(UserContext);
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
@@ -19,8 +24,8 @@ function TelaLogin () {
         });
         promise.then(response => {
             const { data } = response;
-            console.log(data);
-            console.log("deu bom");
+            console.log(data.token);
+            setToken(data.token);
             navigate("/hoje");
         }
         )
@@ -31,8 +36,8 @@ function TelaLogin () {
 
     return (
         <>
+        <Header />
         <h1>TELA LOGIN</h1>
-        <h1>TELA DE CADASTRO</h1>
         <h1>TrackIt</h1>
         <div>
             <input type="text" placeholder="email"

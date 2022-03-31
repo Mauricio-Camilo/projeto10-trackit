@@ -1,0 +1,13 @@
+* {
+    box-sizing: border-box;
+    --cor-fundo-topo: #126BA5;
+    --cor-fundo-corpo: #E5E5E5;
+    --cor-subtitulo: #126BA5;
+    --cor-botao-footer: #52B6FF;
+    --cor-selecionado: #CFCFCF;
+    --cor-cinza-borda: #D4D4D4;
+}
+
+body {
+    font-family: 'Lexend Deca', sans-serif;
+}
