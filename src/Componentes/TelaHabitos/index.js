@@ -5,12 +5,14 @@ import styled from "styled-components";
 
 import Topo from "../Topo";
 import Menu from "../Menu";
+import HabitoSalvo from "./HabitoSalvo";
 import InserirHabito from "./InserirHabito";
 import axios from "axios";
 
 function TelaHabitos() {
 
     const { token, setToken } = useContext(UserContext);
+    const [dadosHabito, setDadosHabito] = useState({id:" ", habito:" " , dias:[]});
 
     const API = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
 
@@ -25,7 +27,9 @@ function TelaHabitos() {
         promise.then(response => {
             const {data} = response;
             console.log("Deu bom");
-            console.log(data);
+            // console.log(data);
+            setDadosHabito({id:data[0].id, 
+            habito:data[0].name, dias:data[0].days});
         });
         promise.catch(response => {
             console.log("Deu ruim");
@@ -33,6 +37,8 @@ function TelaHabitos() {
     },[]);
 
     const [visivel, setVisivel] = useState(false);
+
+    console.log(dadosHabito);
 
     // Esse estado vai pegar os hábitos salvos no servidor e renderizar na tela;
     const [habitosSalvos, setHabitosSalvos] = useState(null);
@@ -56,6 +62,8 @@ function TelaHabitos() {
                         <h1>Meus habitos</h1>
                         <button onClick={() => setVisivel(true)}>+</button>
                     </Subtitle>
+                    <HabitoSalvo id={dadosHabito.id} habito={dadosHabito.habito} 
+                    dias={dadosHabito.dias}/>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 </Container>
 

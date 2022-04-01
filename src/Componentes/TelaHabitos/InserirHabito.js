@@ -16,16 +16,18 @@ function InserirHabito(props) {
 
     const APIPost = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
 
+    // Lista para fazer um map dos dias da semana e seus ids
     const dias = [{ dia: "D", id: 0 }, { dia: "S", id: 1 }, { dia: "T", id: 2 },
     { dia: "Q", id: 3 }, { dia: "Q", id: 4 }, { dia: "S", id: 5 }, { dia: "S", id: 6 },]
 
+    // Estado usado para esconder a tela de criar hábitos ao clicar no botão cancelar
     const [cancelarHabito, setCancelarHabito] = useState(false);
 
+    // Estado criado que salva o hábito digitado no input
     const [habito, setHabito] = useState();
 
+    // Mapa criado que armazena os dias da semana clicados na construção do hábito
     const [diasSelecionados, setDiasSelecionados] = useState(new Map());
-
-    console.log(diasSelecionados);
 
     function selecionarDia(dia, id) {
         const jaSelecionado = diasSelecionados.has(id); // Pergunta pro meu estado se ele já tem esse id, retorna true ou false
@@ -39,11 +41,15 @@ function InserirHabito(props) {
         }
     }
 
+/* Função criada para colocar os estados em condição de esconder a tela de 
+criar hábitos e reabilitar o botão de + no componente pai de inserir hábitos */
     function ResetarHabito() {
         setCancelarHabito(true);
         props.setVisivel(false);
     }
 
+/* Função que faz o post para o servidor do hábito criado, e também faz o efeito
+de cancelar, para colocar a tela no estado inicial */
     function SalvarHabito() {
         console.log("fui clicado");
         const promise = axios.post(APIPost, {
@@ -63,7 +69,6 @@ function InserirHabito(props) {
         })
     }
 
-    console.log(habito);
     return (
         <>
             {cancelarHabito ?
@@ -97,6 +102,8 @@ function InserirHabito(props) {
     )
 }
 
+/* Função que responde a um determinado estado vindo do mapa por props que vai alterar
+a cor do botão ao clicar no dia da semana, a cor depende apenas do estado */
 function corBotao(selecionado) {
     if (selecionado) return "gray";
     else return "white";
