@@ -6,7 +6,8 @@ import styled from "styled-components";
 
 function HabitoHoje(props) {
 
-    const { habito, ContagemAtual, ContagemRecorde, id } = props;
+    const { habito, contagemAtual, contagemRecorde, 
+        id, concluidos, setConcluidos } = props;
 
     const { token, setToken } = useContext(UserContext);
 
@@ -17,7 +18,8 @@ function HabitoHoje(props) {
     }
 
     function marcarHabito () {
-        SetAtual(atual+1)
+        SetAtual(atual+1);
+        setConcluidos(concluidos+1);
         console.log("Marcar hábito como concluido");
             const promise = axios.post(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,
@@ -31,7 +33,8 @@ function HabitoHoje(props) {
     }
 
     function desmarcarHabito () {
-        SetAtual(atual-1)
+        SetAtual(atual-1);
+        setConcluidos(concluidos-1);
         console.log("Remover hábito da lista");
         const promise = axios.post(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
@@ -56,8 +59,9 @@ function HabitoHoje(props) {
     // Estado usado para mudar a cor do icone ao ser clicado
     const [iconeSelecionado, setIconeSelecionado] = useState(true);
 
-    const [atual, SetAtual] = useState(ContagemAtual);
-    const [recorde, SetRecorde] = useState(ContagemRecorde);
+    // Estados usados para renderizar na tela a contagem dos hábitos
+    const [atual, SetAtual] = useState(contagemAtual);
+    const [recorde, SetRecorde] = useState(contagemRecorde);
 
     /* Estado criado apenas para testar a lógica, modificar depois o
     código colocando o estado de cima, recorde, que pega os dados da API */

@@ -11,7 +11,10 @@ function TelaHoje() {
 
     const { token, setToken } = useContext(UserContext);
 
+    // Estado que guarda os habitos que vieram da API
     const [habitosHoje, setHabitosHoje] = useState([]);
+
+    const [habitosConcluidos, setHabitosConcluidos] = useState(0);
 
     const navigate = useNavigate();
 
@@ -36,17 +39,28 @@ function TelaHoje() {
         })
     }, []);
 
+    console.log(habitosConcluidos)
+
+    let resultado = 0;
+    resultado = parseInt((habitosConcluidos/habitosHoje.length)*100)
+    // console.log(resultado);
 
     return (
         <>
             {/* <Topo /> */}
             <h1>TELA DE HOJE</h1>
             <h1> COLOCAR O DIA DE HOJE USANDO BIBLIOTECA</h1>
+            {resultado === 0 ?
+                <p>Nenhum hábito concluído ainda</p> :
+                <p>{resultado}% dos hábitos concluídos</p>
+            }
             {habitosHoje.map(habito => {
                 const { id, name, currentSequence, highestSequence } = habito;
                 return (
                     <HabitoHoje key={id} habito={name} id={id}
-                        ContagemAtual={currentSequence} ContagemRecorde={highestSequence}
+                        contagemAtual={currentSequence} contagemRecorde={highestSequence}
+                        concluidos={habitosConcluidos}
+                        setConcluidos={(valor) => setHabitosConcluidos(valor)}
                     />
                 )
             })
