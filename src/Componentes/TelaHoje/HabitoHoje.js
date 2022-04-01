@@ -16,12 +16,9 @@ function HabitoHoje(props) {
         }
     }
 
-    function toggle () {
-        setIconeSelecionado(!iconeSelecionado);
-        console.log(iconeSelecionado);
-        console.log("Entrar no if");
-        if (iconeSelecionado === true) {
-            console.log("Marcar hábito como concluido");
+    function marcarHabito () {
+        SetAtual(atual+1)
+        console.log("Marcar hábito como concluido");
             const promise = axios.post(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,
             {},config)
@@ -31,19 +28,28 @@ function HabitoHoje(props) {
                 console.log("Deu bom para marcar hábito");
             })
             promise.catch(err => console.log(err.response.statusText));
-        }
-        else {
-            console.log("Remover hábito da lista");
-            const promise = axios.post(
-                `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
-                {},config)
-                promise.then(response => {
-                    const {data} = response;
-                    console.log(data);
-                    console.log("Deu bom para desmarcar hábito");
-                })
-                promise.catch(err => console.log(err.response.statusText));
-        }
+    }
+
+    function desmarcarHabito () {
+        SetAtual(atual-1)
+        console.log("Remover hábito da lista");
+        const promise = axios.post(
+            `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
+            {},config)
+            promise.then(response => {
+                const {data} = response;
+                console.log(data);
+                console.log("Deu bom para desmarcar hábito");
+            })
+            promise.catch(err => console.log(err.response.statusText));
+    }
+
+    function toggle () {
+        setIconeSelecionado(!iconeSelecionado);
+        // console.log(iconeSelecionado);
+        console.log("Entrar no if");
+        if (iconeSelecionado === true) marcarHabito();
+        else desmarcarHabito();
     }
 
 
@@ -53,12 +59,24 @@ function HabitoHoje(props) {
     const [atual, SetAtual] = useState(ContagemAtual);
     const [recorde, SetRecorde] = useState(ContagemRecorde);
 
+    /* Estado criado apenas para testar a lógica, modificar depois o
+    código colocando o estado de cima, recorde, que pega os dados da API */
+    const [aux, setAux] = useState(1);
+
     return (
         <Container>
             <div>
                 <h1>{habito}</h1>
-                <p>Sequência Atual: {atual} dias</p>
-                <p>Seu recorde: {recorde} dias </p>
+                <Atual selecionado={iconeSelecionado}> 
+                Sequência Atual: <span> {atual} 
+                {atual === 1? " dia" : " dias"} 
+                </span> 
+                </Atual>
+                <Recorde atual={atual} recorde={aux}> 
+                Seu recorde: <span> {aux} 
+                {aux === 1? " dia" : " dias"} 
+                </span> 
+                </Recorde>
             </div>
             <Icon onClick={() => toggle()} selecionado={iconeSelecionado}>
                 <ion-icon name="checkbox"></ion-icon>
@@ -67,12 +85,21 @@ function HabitoHoje(props) {
     )
 }
 
-
 function corIcone (selecionado) {
     /* Por algum motivo esse selecionado está invertido em relação ao estado
     por isso coloquei o not nele */
-    if (!selecionado) return "green";
+    if (!selecionado) return "blue";
     else return "gray";
+}
+
+function corAtual (selecionado) {
+    if (!selecionado) return "blue";
+    else return "black";
+}
+
+function corRecorde (atual, recorde) {
+    if (atual < recorde) return "black"
+    else return "blue"
 }
 
 const Container = styled.div`
@@ -90,7 +117,14 @@ const Container = styled.div`
         margin: 10px 0;
     }
 `
-
+const Atual = styled.p`
+    span {
+        color: ${(props) => corAtual(props.selecionado)};
+`
+const Recorde = styled.p`
+    span {
+        color: ${(props) => corRecorde(props.atual, props.recorde)};
+`
 
 const Icon = styled.button`
     font-size: 25px;
