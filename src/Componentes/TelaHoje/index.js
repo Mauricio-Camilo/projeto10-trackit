@@ -46,7 +46,7 @@ function TelaHoje() {
                 const { id, name, currentSequence, highestSequence } = habito;
                 return (
                     <HabitoHoje key={id} habito={name} id={id}
-                        atual={currentSequence} recorde={highestSequence}
+                        ContagemAtual={currentSequence} ContagemRecorde={highestSequence}
                     />
                 )
             })
