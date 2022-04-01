@@ -6,6 +6,9 @@ import axios from "axios";
 
 function InserirHabito(props) {
 
+    const {setVisivel, habito, setHabito, 
+    diasSelecionados, setDiasSelecionados} = props;
+
     const { token, setToken } = useContext(UserContext);
 
     const config = {
@@ -23,12 +26,6 @@ function InserirHabito(props) {
     // Estado usado para esconder a tela de criar hábitos ao clicar no botão cancelar
     const [cancelarHabito, setCancelarHabito] = useState(false);
 
-    // Estado criado que salva o hábito digitado no input
-    const [habito, setHabito] = useState();
-
-    // Mapa criado que armazena os dias da semana clicados na construção do hábito
-    const [diasSelecionados, setDiasSelecionados] = useState(new Map());
-
     function selecionarDia(dia, id) {
         const jaSelecionado = diasSelecionados.has(id); // Pergunta pro meu estado se ele já tem esse id, retorna true ou false
         if (jaSelecionado) { // Se eu já tinha selecionado e clicar de novo
@@ -45,7 +42,7 @@ function InserirHabito(props) {
 criar hábitos e reabilitar o botão de + no componente pai de inserir hábitos */
     function ResetarHabito() {
         setCancelarHabito(true);
-        props.setVisivel(false);
+        setVisivel(false);
     }
 
 /* Função que faz o post para o servidor do hábito criado, e também faz o efeito

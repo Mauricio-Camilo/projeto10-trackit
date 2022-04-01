@@ -14,6 +14,14 @@ function TelaHabitos() {
     const { token, setToken } = useContext(UserContext);
     const [dadosHabito, setDadosHabito] = useState([]);
 
+    /* Os dois estaod abaixo foram criados aqui e passados para os filhos, assim
+    o input mantém os dados digitados enquanto não for enviado para a API */
+
+    // Estado criado que salva o hábito digitado no input
+    const [habito, setHabito] = useState();
+
+    // Mapa criado que armazena os dias da semana clicados na construção do hábito
+    const [diasSelecionados, setDiasSelecionados] = useState(new Map());
 
     const API = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
 
@@ -49,7 +57,17 @@ function TelaHabitos() {
                             <h1>Meus habitos</h1>
                             <button>+</button>
                         </Subtitle>
-                        <InserirHabito setVisivel={setVisivel} />
+                        <InserirHabito setVisivel={setVisivel} 
+                        habito = {habito} setHabito={setHabito}
+                        diasSelecionados ={diasSelecionados} 
+                        setDiasSelecionados = {setDiasSelecionados}
+                        />
+                        {dadosHabito.map (dado => {
+                            return (
+                                <HabitoSalvo key={dado.id} id={dado.id} habito={dado.name}
+                            dias={dado.days} />
+                            )
+                        })}
                         <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                     </Container>
                     :

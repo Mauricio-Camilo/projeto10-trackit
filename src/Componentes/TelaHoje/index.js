@@ -64,7 +64,6 @@ function TelaHoje() {
                     />
                 )
             })
-
             }
             {/* <Menu /> */}
         </>
