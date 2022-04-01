@@ -2,9 +2,13 @@ import { useState, useContext } from "react";
 import UserContext from "../contexts/UserContext";
 
 import styled from "styled-components";
+import { Grid } from  'react-loader-spinner';
+
 import axios from "axios";
 
 function InserirHabito(props) {
+
+    const loading = <Grid color="red" height={50} width={80} />;  
 
     const {setVisivel, habito, setHabito, 
     diasSelecionados, setDiasSelecionados} = props;
@@ -18,6 +22,12 @@ function InserirHabito(props) {
     }
 
     const APIPost = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+
+    // Estado criado para colocar a animação de loading no botão de salvar
+    const [salvar, setSalvar] = useState("Salvar");
+
+    // Estado criado para desabilitar o botão enquanto a pagina está carregando
+    const [selecionado, setSelecionado] = useState(false);
 
     // Lista para fazer um map dos dias da semana e seus ids
     const dias = [{ dia: "D", id: 0 }, { dia: "S", id: 1 }, { dia: "T", id: 2 },
@@ -43,12 +53,16 @@ criar hábitos e reabilitar o botão de + no componente pai de inserir hábitos 
     function ResetarHabito() {
         setCancelarHabito(true);
         setVisivel(false);
+        setHabito();
+        setDiasSelecionados(new Map());
     }
 
 /* Função que faz o post para o servidor do hábito criado, e também faz o efeito
 de cancelar, para colocar a tela no estado inicial */
     function SalvarHabito() {
         console.log("fui clicado");
+        setSalvar(loading);
+        setSelecionado(true);
         const promise = axios.post(APIPost, {
             name: habito,
             days: [...diasSelecionados.keys()] // Pega apenas os ids do mapa
@@ -91,7 +105,7 @@ de cancelar, para colocar a tela no estado inicial */
                     </Days>
                     <Actions>
                         <p onClick={() => ResetarHabito()}>Cancelar</p>
-                        <button onClick={() => SalvarHabito()}>Salvar</button>
+                        <Button selecionado={selecionado} onClick={() => SalvarHabito()}>{salvar}</Button>
                     </Actions>
                 </Container>
             }
@@ -104,6 +118,16 @@ a cor do botão ao clicar no dia da semana, a cor depende apenas do estado */
 function corBotao(selecionado) {
     if (selecionado) return "gray";
     else return "white";
+}
+
+function mudarBotao(selecionado) {
+    if (selecionado) return "black";
+    else return "blue";
+}
+
+function desabilitarBotao (selecionado) {
+    if (selecionado === true) return "none";
+    else return "display";
 }
 
 const Container = styled.div`
@@ -156,25 +180,25 @@ const Actions = styled.div`
     padding-top: 29px;
     padding-right: 16px;
 
-
         p {
             font-size: 16px;
             color: var(--cor-botao-footer);
         }
-
-        button {
-            font-size: 16px;
-            color: #FFFFFF;
-            width: 84px;
-            height: 35px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 5px;
-            margin-left: 19px;
-            background-color: var(--cor-botao-footer);
-        }
 `
+const Button = styled.button`
+    font-size: 16px;
+    color: #FFFFFF;
+    width: 84px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-left: 19px;
+    pointer-events: ${(props) => desabilitarBotao(props.selecionado)};
+    background-color: ${(props) => mudarBotao(props.selecionado)};
+`
+
 
 export default InserirHabito;
 
