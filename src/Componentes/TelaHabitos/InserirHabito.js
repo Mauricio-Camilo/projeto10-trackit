@@ -150,7 +150,7 @@ const Days = styled.div`
 
     display: flex;
     padding-right: 50px;
-    background-color: blue;
+    background-color: white;
 `
 const Actions = styled.div`
     display: flex;

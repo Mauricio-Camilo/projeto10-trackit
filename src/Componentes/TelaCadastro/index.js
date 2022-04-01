@@ -107,3 +107,9 @@ const Cadastrar = styled.button `
 
 
 export default TelaCadastro;
+
+
+// {dadosHabito.map(dado => {
+//     <HabitoSalvo key={dado.id} id={dado.id} habito={dado.name} 
+//     dias={dado.days}/>
+// })}

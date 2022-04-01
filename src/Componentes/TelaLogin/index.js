@@ -26,7 +26,7 @@ function TelaLogin () {
             const { data } = response;
             console.log(data.token);
             setToken(data.token);
-            navigate("/habitos"); // mudar depois para tela hoje
+            navigate("/hoje"); // mudar depois para tela hoje
         }
         )
         promise.catch(response => {

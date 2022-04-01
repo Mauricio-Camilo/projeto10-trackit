@@ -6,11 +6,6 @@ function HabitoSalvo(props) {
 
     const { id, habito, dias } = props;
 
-    const [diasSelecionados, setDiasSelecionados] = useState(new Map());
-
-
-    const [selecionado, setSelecionado] = useState(false);
-
     const diasSemana = [{ dia: "D", id: 0 }, { dia: "S", id: 1 }, { dia: "T", id: 2 },
     { dia: "Q", id: 3 }, { dia: "Q", id: 4 }, { dia: "S", id: 5 }, { dia: "S", id: 6 },]
 
@@ -71,7 +66,6 @@ const DayWeek = styled.button`
 `
 
 const Days = styled.div`
-
     display: flex;
     padding-right: 50px;
 `

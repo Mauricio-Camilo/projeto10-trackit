@@ -12,7 +12,8 @@ import axios from "axios";
 function TelaHabitos() {
 
     const { token, setToken } = useContext(UserContext);
-    const [dadosHabito, setDadosHabito] = useState({id:" ", habito:" " , dias:[]});
+    const [dadosHabito, setDadosHabito] = useState([]);
+
 
     const API = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
 
@@ -25,51 +26,49 @@ function TelaHabitos() {
     useEffect(() => {
         const promise = axios.get(API, config);
         promise.then(response => {
-            const {data} = response;
+            const { data } = response;
             console.log("Deu bom");
-            // console.log(data);
-            setDadosHabito({id:data[0].id, 
-            habito:data[0].name, dias:data[0].days});
+            console.log(data);
+            setDadosHabito(data);
         });
         promise.catch(response => {
             console.log("Deu ruim");
-        })    
-    },[]);
+        })
+    }, []);
 
     const [visivel, setVisivel] = useState(false);
 
     console.log(dadosHabito);
 
-    // Esse estado vai pegar os hábitos salvos no servidor e renderizar na tela;
-    const [habitosSalvos, setHabitosSalvos] = useState(null);
-
-    return (
-        <>
-            {/* <Topo /> */}
-
-            {visivel ?
-                <Container>
-                    <Subtitle>
-                        <h1>Meus habitos</h1>
-                        <button>+</button>
-                    </Subtitle>
-                    <InserirHabito setVisivel={setVisivel}/>
-                    <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
-                </Container>
-                :
-                <Container>
-                    <Subtitle>
-                        <h1>Meus habitos</h1>
-                        <button onClick={() => setVisivel(true)}>+</button>
-                    </Subtitle>
-                    <HabitoSalvo id={dadosHabito.id} habito={dadosHabito.habito} 
-                    dias={dadosHabito.dias}/>
-                    <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
-                </Container>
-
-            }
-        </>
-    )
+        return (
+            <>
+                <Topo />
+                {visivel ?
+                    <Container>
+                        <Subtitle>
+                            <h1>Meus habitos</h1>
+                            <button>+</button>
+                        </Subtitle>
+                        <InserirHabito setVisivel={setVisivel} />
+                        <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                    </Container>
+                    :
+                    <Container>
+                        <Subtitle>
+                            <h1>Meus habitos</h1>
+                            <button onClick={() => setVisivel(true)}>+</button>
+                        </Subtitle>
+                        {dadosHabito.map (dado => {
+                            return (
+                                <HabitoSalvo key={dado.id} id={dado.id} habito={dado.name}
+                            dias={dado.days} />
+                            )
+                        })}
+                        <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                    </Container>
+                }
+            </>
+        )
 }
 
 const Container = styled.div`

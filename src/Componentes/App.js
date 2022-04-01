@@ -11,7 +11,7 @@ import TelaHoje from "./TelaHoje";
 import TelaHistorico from "./TelaHistorico";
 
 function App() {
-    const [token, setToken] = useState("");
+    const [token, setToken] = useState(""); // Verificar se existe o token no local storage
 
     return (
         <UserContext.Provider value={{ token, setToken }}>
