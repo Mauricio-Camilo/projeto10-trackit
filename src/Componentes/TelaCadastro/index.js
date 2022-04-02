@@ -46,7 +46,7 @@ function TelaCadastro() {
     }
     return (
         <>
-            <Container>
+            <Container selecionado={selecionado}>
             <h1>TELA DE CADASTRO</h1>
             <h1>TrackIt</h1>
             <form onSubmit={cadastrarDados}>
@@ -87,10 +87,18 @@ function resetarBotao (selecionado) {
     else return "";
 }
 
+function corInput (selecionado) {
+    if (selecionado) return "gray";
+    else return "white";
+}
+
 const Container = styled.div `
+    input {
+        background-color: ${(props) => corInput(props.selecionado)};
+        pointer-events: ${(props) => resetarBotao(props.selecionado)};;
+    }
   
 `
-
 const Cadastrar = styled.button `
     font-size: 35px;
     color: #FFFFFF;
@@ -101,8 +109,8 @@ const Cadastrar = styled.button `
     align-items: center;
     border-radius: 5px;
     margin-left: 19px;
-    pointer-events: ${(props) => resetarBotao(props.selecionado)};
     background-color: ${(props) => corBotao(props.selecionado)};
+    pointer-events: ${(props) => resetarBotao(props.selecionado)};
 `
 
 

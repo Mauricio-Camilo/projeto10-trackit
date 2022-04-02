@@ -84,7 +84,7 @@ de cancelar, para colocar a tela no estado inicial */
         <>
             {cancelarHabito ?
                 <></> :
-                <Container>
+                <Container selecionado={selecionado}>
                     <input type="text" placeholder="nome do hábito"
                         onChange={(e) => setHabito(e.target.value)}
                         value={habito}>
@@ -130,6 +130,11 @@ function desabilitarBotao (selecionado) {
     else return "display";
 }
 
+function corInput (selecionado) {
+    if (selecionado) return "gray";
+    else return "white";
+}
+
 const Container = styled.div`
     width: 340px;
     height: 200px;
@@ -147,6 +152,8 @@ const Container = styled.div`
             border: 1px solid var(--cor-cinza-borda);
             margin: 18px 19px;
             padding-left: 11px;
+            background-color: ${(props) => corInput(props.selecionado)};
+            pointer-events: ${(props) => desabilitarBotao(props.selecionado)};;
         }
 `
 

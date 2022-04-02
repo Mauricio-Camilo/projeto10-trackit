@@ -2,13 +2,19 @@ import { useState, useContext } from "react";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import styled from "styled-components";
 import Header from "../Layout/Header"
+import logo from "../../assets/logo.svg";
+import { Grid } from 'react-loader-spinner';
 
-function TelaLogin () {
+function TelaLogin() {
 
-    const {token, setToken} = useContext(UserContext);
+    const { token, setToken } = useContext(UserContext);
 
+    const loading = <Grid color="#FFFFFF" height={25} width={50} />;
+    const [entrar, setEntrar] = useState("Entrar");
+
+    const [selecionado, setSelecionado] = useState(false);
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
@@ -18,6 +24,8 @@ function TelaLogin () {
 
 
     function fazerLogin() {
+        setEntrar(loading);
+        setSelecionado(true);
         const promise = axios.post(API, {
             email: email,
             password: senha
@@ -26,33 +34,100 @@ function TelaLogin () {
             const { data } = response;
             console.log(data.token);
             setToken(data.token);
-            navigate("/habitos"); // mudar depois para tela hoje
+            navigate("/hoje"); // mudar depois para tela hoje
         }
         )
         promise.catch(response => {
             alert("Informações incorretas, digite novamente email e senha");
+            setSelecionado(false);
+            setEntrar("Entrar");
         })
     }
 
     return (
-        <>
-        <Header />
-        <h1>TELA LOGIN</h1>
-        <h1>TrackIt</h1>
-        <div>
-            <input type="text" placeholder="email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}>
-            </input>
-            <input type="password" placeholder="senha"
-                onChange={(e) => setSenha(e.target.value)}
-                value={senha}>
-            </input>
-        </div>
-            <button onClick={fazerLogin}>Entrar</button>
-            <p onClick={() => navigate("/cadastro")}>Não tem uma conta? Cadastre-se</p>
-            </>
+
+        <Container>            
+            <Logo src={logo}></Logo>
+            <Inputs selecionado={selecionado}>
+                <input type="text" placeholder="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}>
+                </input>
+                <input type="password" placeholder="senha"
+                    onChange={(e) => setSenha(e.target.value)}
+                    value={senha}>
+                </input>
+            </Inputs>
+            <Login selecionado={selecionado} onClick={fazerLogin}>{entrar}</Login>
+            <Hiperlink onClick={() => navigate("/cadastro")}>
+                Não tem uma conta? Cadastre-se </Hiperlink>
+        </Container>
+
     )
 }
+
+function mudarBotao(selecionado) {
+    if (selecionado) return "0.7";
+    else return "1";
+
+}
+
+function resetarBotao(selecionado) {
+    if (selecionado) return "none";
+    else return "";
+}
+
+function corInput(selecionado) {
+    if (selecionado) return "var(--cor-cinza-check)";
+    else return "#FFFFFF";
+}
+
+const Container = styled.div`
+    width: 375px;
+    height: 667px;
+`
+
+const Logo = styled.img`
+    margin: 0 98px;
+    margin-top: 68px;
+    margin-bottom: 33px;
+`
+
+const Inputs = styled.div`
+    input {
+        width: 303px;
+        height: 45px;
+        padding-left: 11px;
+        margin-left: 35px;
+        margin-bottom: 6px;
+        background-color: ${(props) => corInput(props.selecionado)};
+        pointer-events: ${(props) => resetarBotao(props.selecionado)};;
+    }
+    `
+
+const Login = styled.button`
+    font-size: 22px;
+    color: #FFFFFF;
+    width: 303px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-left: 35px;
+    margin-bottom: 25px;
+    opacity: ${(props) => mudarBotao(props.selecionado)};
+    background-color: var(--cor-azul-claro);
+    pointer-events: ${(props) => resetarBotao(props.selecionado)};
+
+`
+const Hiperlink = styled.p`
+    font-size: 14px;
+    text-align: center;
+    text-decoration: underline;
+    color: var(--cor-azul-claro);
+  
+`
+
 
 export default TelaLogin;

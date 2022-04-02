@@ -1,14 +1,16 @@
 * {
     box-sizing: border-box;
-    --cor-fundo-topo: #126BA5;
+    --cor-azul-escuro: #126BA5;
     --cor-fundo-corpo: #E5E5E5;
-    --cor-subtitulo: #126BA5;
-    --cor-botao-footer: #52B6FF;
-    --cor-selecionado: #CFCFCF;
+    --cor-azul-claro: #52B6FF;
+    --cor-cinza-dias: #CFCFCF;
+    --cor-cinza-check: #EBEBEB;
     --cor-cinza-borda: #D4D4D4;
-    --cor-cinza-input: #666666;
+    --cor-cinza-letras: #666666;
+    --cor-verde: #8FC549;
 }
 
 body {
     font-family: 'Lexend Deca', sans-serif;
+    text-decoration: ;
 }
