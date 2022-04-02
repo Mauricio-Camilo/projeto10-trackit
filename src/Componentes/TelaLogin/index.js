@@ -130,6 +130,5 @@ const Hiperlink = styled.p`
     text-align: center;
     text-decoration: underline;
     color: var(--cor-azul-claro);
-  
 `
 export default TelaLogin;

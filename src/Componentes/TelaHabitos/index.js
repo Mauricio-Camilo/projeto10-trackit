@@ -1,13 +1,14 @@
 import { useState, useEffect, useContext } from "react";
 import UserContext from "../contexts/UserContext";
+import axios from "axios";
+
 
 import styled from "styled-components";
 
 import Header from "../Layout/Header";
-import Menu from "../Menu";
 import HabitoSalvo from "./HabitoSalvo";
 import InserirHabito from "./InserirHabito";
-import axios from "axios";
+import Menu from "../Layout/Menu";
 
 function TelaHabitos() {
 
@@ -69,7 +70,9 @@ function TelaHabitos() {
                         })}
                         <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                     </Container>
+                
                     :
+
                     <Container>
                         <Subtitle>
                             <h1>Meus habitos</h1>
@@ -84,6 +87,7 @@ function TelaHabitos() {
                         <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                     </Container>
                 }
+                <Menu />
             </>
         )
 }
