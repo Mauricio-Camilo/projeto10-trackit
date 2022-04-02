@@ -9,7 +9,7 @@ import { Grid } from 'react-loader-spinner';
 
 function TelaLogin() {
 
-    const { token, setToken } = useContext(UserContext);
+    const { setToken, setPerfil } = useContext(UserContext);
 
     const loading = <Grid color="#FFFFFF" height={25} width={50} />;
     const [entrar, setEntrar] = useState("Entrar");
@@ -22,8 +22,8 @@ function TelaLogin() {
 
     const navigate = useNavigate();
 
-
-    function fazerLogin() {
+    function fazerLogin(event) {
+        event.preventDefault();
         setEntrar(loading);
         setSelecionado(true);
         const promise = axios.post(API, {
@@ -32,33 +32,38 @@ function TelaLogin() {
         });
         promise.then(response => {
             const { data } = response;
-            console.log(data.token);
+            // console.log(data);
             setToken(data.token);
-            navigate("/hoje"); // mudar depois para tela hoje
+            setPerfil(data.image);
+            navigate("/habitos"); 
         }
         )
         promise.catch(response => {
             alert("Informações incorretas, digite novamente email e senha");
             setSelecionado(false);
             setEntrar("Entrar");
+            setEmail("");
+            setSenha("");
         })
     }
 
     return (
 
-        <Container>            
+        <Container>
             <Logo src={logo}></Logo>
-            <Inputs selecionado={selecionado}>
-                <input type="text" placeholder="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}>
-                </input>
-                <input type="password" placeholder="senha"
-                    onChange={(e) => setSenha(e.target.value)}
-                    value={senha}>
-                </input>
-            </Inputs>
-            <Login selecionado={selecionado} onClick={fazerLogin}>{entrar}</Login>
+            <form onSubmit={fazerLogin}>
+                <Inputs selecionado={selecionado}>
+                    <input type="text" placeholder="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email} required>
+                    </input>
+                    <input type="password" placeholder="senha"
+                        onChange={(e) => setSenha(e.target.value)}
+                        value={senha} required>
+                    </input>
+                </Inputs>
+                <Login selecionado={selecionado} type="submit">{entrar}</Login>
+            </form>
             <Hiperlink onClick={() => navigate("/cadastro")}>
                 Não tem uma conta? Cadastre-se </Hiperlink>
         </Container>
@@ -69,7 +74,6 @@ function TelaLogin() {
 function mudarBotao(selecionado) {
     if (selecionado) return "0.7";
     else return "1";
-
 }
 
 function resetarBotao(selecionado) {
@@ -128,6 +132,4 @@ const Hiperlink = styled.p`
     color: var(--cor-azul-claro);
   
 `
-
-
 export default TelaLogin;

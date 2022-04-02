@@ -3,7 +3,7 @@ import UserContext from "../contexts/UserContext";
 
 import styled from "styled-components";
 
-import Topo from "../Topo";
+import Header from "../Layout/Header";
 import Menu from "../Menu";
 import HabitoSalvo from "./HabitoSalvo";
 import InserirHabito from "./InserirHabito";
@@ -11,7 +11,8 @@ import axios from "axios";
 
 function TelaHabitos() {
 
-    const { token, setToken } = useContext(UserContext);
+    const { token, setToken, perfil, setPerfil } = useContext(UserContext);
+
     const [dadosHabito, setDadosHabito] = useState([]);
 
     /* Os dois estaod abaixo foram criados aqui e passados para os filhos, assim
@@ -35,8 +36,8 @@ function TelaHabitos() {
         const promise = axios.get(API, config);
         promise.then(response => {
             const { data } = response;
-            console.log("Deu bom");
-            console.log(data);
+            // console.log("Deu bom");
+            // console.log(data);
             setDadosHabito(data);
         });
         promise.catch(response => {
@@ -46,11 +47,9 @@ function TelaHabitos() {
 
     const [visivel, setVisivel] = useState(false);
 
-    console.log(dadosHabito);
-
         return (
             <>
-                <Topo />
+                <Header />
                 {visivel ?
                     <Container>
                         <Subtitle>

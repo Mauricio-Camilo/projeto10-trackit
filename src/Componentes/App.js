@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import UserContext from "./contexts/UserContext";
 import TelaLogin from "./TelaLogin";
-import TelaLogin2 from "./TelaLogin2";
 import TelaCadastro2 from "./TelaCadastro2";
 
 import TelaCadastro from "./TelaCadastro";
@@ -11,13 +10,16 @@ import TelaHoje from "./TelaHoje";
 import TelaHistorico from "./TelaHistorico";
 
 function App() {
+
     const [token, setToken] = useState(""); // Verificar se existe o token no local storage
+    const [perfil, setPerfil] = useState("");
+
+    const context = {token, setToken, perfil, setPerfil};
 
     return (
-        <UserContext.Provider value={{ token, setToken }}>
+        <UserContext.Provider value={context}>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/login2" element={<TelaLogin2 />} />
                     <Route path="/cadastro2" element={<TelaCadastro2 />} />
                     <Route path="/" element={<TelaLogin />} />
                     <Route path="/cadastro" element={<TelaCadastro />} />
