@@ -5,12 +5,12 @@
     --cor-azul-claro: #52B6FF;
     --cor-cinza-dias: #CFCFCF;
     --cor-cinza-check: #EBEBEB;
-    --cor-cinza-borda: #D4D4D4;
+    --cor-cinza-borda: #D5D5D5;
     --cor-cinza-letras: #666666;
+    --cor-cinza-hoje: #BABABA;
     --cor-verde: #8FC549;
 }
 
 body {
     font-family: 'Lexend Deca', sans-serif;
-    text-decoration: ;
 }

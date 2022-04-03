@@ -48,56 +48,66 @@ function TelaHabitos() {
 
     const [visivel, setVisivel] = useState(false);
 
-        return (
-            <>
-                <Header />
-                {visivel ?
-                    <Container>
-                        <Subtitle>
-                            <h1>Meus habitos</h1>
-                            <button>+</button>
-                        </Subtitle>
-                        <InserirHabito setVisivel={setVisivel} 
-                        habito = {habito} setHabito={setHabito}
-                        diasSelecionados ={diasSelecionados} 
-                        setDiasSelecionados = {setDiasSelecionados}
-                        />
-                        {dadosHabito.map (dado => {
-                            return (
-                                <HabitoSalvo key={dado.id} id={dado.id} habito={dado.name}
-                            dias={dado.days} />
-                            )
-                        })}
-                        <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
-                    </Container>
-                
-                    :
+    return (
+        <>
+            <Header />
+            {visivel ?
+                <Container>
+                    <Subtitle>
+                        <h1>Meus habitos</h1>
+                        <button>+</button>
+                    </Subtitle>
+                    <InserirHabito setVisivel={setVisivel}
+                        habito={habito} setHabito={setHabito}
+                        diasSelecionados={diasSelecionados}
+                        setDiasSelecionados={setDiasSelecionados}
+                    />
+                    {dadosHabito.map(dado => {
+                        return (
+                            <HabitoSalvo key={dado.id} id={dado.id} habito={dado.name}
+                                dias={dado.days} />
+                        )
+                    })}
+                     {dadosHabito.length > 0 ?
+                        <></> :
+                        <Message>
+                            Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                        </Message>
+                    }
+                </Container>
+                :
+                <Container>
+                    <Subtitle>
+                        <h1>Meus habitos</h1>
+                        <button onClick={() => setVisivel(true)}>+</button>
+                    </Subtitle>
+                    {dadosHabito.map(dado => {
+                        return (
+                            <HabitoSalvo key={dado.id} id={dado.id} habito={dado.name}
+                                dias={dado.days} />
+                        )
+                    })}
+                    {dadosHabito.length > 0 ?
+                        <></> :
+                        <Message>
+                            Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                        </Message>
+                    }
 
-                    <Container>
-                        <Subtitle>
-                            <h1>Meus habitos</h1>
-                            <button onClick={() => setVisivel(true)}>+</button>
-                        </Subtitle>
-                        {dadosHabito.map (dado => {
-                            return (
-                                <HabitoSalvo key={dado.id} id={dado.id} habito={dado.name}
-                            dias={dado.days} />
-                            )
-                        })}
-                        <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
-                    </Container>
-                }
-                <Menu />
-            </>
-        )
+                </Container>
+            }
+            <Menu />
+        </>
+    )
 }
 
 const Container = styled.div`
     background-color: #E5E5E5;
     width: 375px;
-    height: 597px;
-    margin: 70px 0;
-
+    height: 100%;
+    padding-bottom: 100px;
+    margin-top: 70px;
+    margin-bottom: 70px;
         p {
             font-size: 18px;
             padding-left: 17px;
@@ -125,8 +135,13 @@ const Subtitle = styled.div`
             heigth: 35px;
             border-radius: 5px;
             margin-right: 18px;
-            background-color: var(--cor-botao-footer)
+            background-color: var(--cor-azul-claro)
         }
+`
+
+const Message = styled.p`
+        font-size: 18px;
+        color: var(--cor-cinza-letras)
 `
 
 export default TelaHabitos;

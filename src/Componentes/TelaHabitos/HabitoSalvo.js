@@ -29,8 +29,8 @@ function HabitoSalvo(props) {
 }
 
 function corBotao(selecionado) {
-    if (selecionado) return "gray";
-    else return "white";
+    if (selecionado) return "(--cor-cinza-dias)";
+    else return "#FFFFFF";
 }
 
 const Container = styled.div`
@@ -38,16 +38,21 @@ const Container = styled.div`
     height: 91px;
     border-radius: 5px;
     margin: 0 auto;
-    margin-bottom: 0px;
+    margin-bottom: 30px;
     background-color: #FFFFFF;
 
     p {
         font-size: 20px;
-        color: var(--cor-cinza-input);
+        color: var(--cor-cinza-letras);
         padding: 13px 0;
-        padding-left: 11px;
+        padding-left: 14px;
 
     }
+`
+const Days = styled.div`
+    display: flex;
+    margin-left: -4px;
+    padding-right: 50px;
 `
 
 const DayWeek = styled.button`
@@ -65,9 +70,6 @@ const DayWeek = styled.button`
     background-color: ${(props) => corBotao(props.selecionado)};; 
 `
 
-const Days = styled.div`
-    display: flex;
-    padding-right: 50px;
-`
+
 export default HabitoSalvo;
 

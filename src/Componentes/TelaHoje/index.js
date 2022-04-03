@@ -2,9 +2,10 @@ import { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-import Topo from "../Topo";
-import Menu from "../Menu";
+import Header from "../Layout/Header";
+import Menu from "../Layout/Menu";
 import HabitoHoje from "./HabitoHoje";
 
 function TelaHoje() {
@@ -42,32 +43,61 @@ function TelaHoje() {
     console.log(habitosConcluidos)
 
     let resultado = 0;
-    resultado = parseInt((habitosConcluidos/habitosHoje.length)*100)
+    resultado = parseInt((habitosConcluidos / habitosHoje.length) * 100)
     // console.log(resultado);
 
     return (
         <>
-            {/* <Topo /> */}
-            <h1>TELA DE HOJE</h1>
-            <h1> COLOCAR O DIA DE HOJE USANDO BIBLIOTECA</h1>
-            {resultado === 0 ?
-                <p>Nenhum hábito concluído ainda</p> :
-                <p>{resultado}% dos hábitos concluídos</p>
-            }
-            {habitosHoje.map(habito => {
-                const { id, name, currentSequence, highestSequence } = habito;
-                return (
-                    <HabitoHoje key={id} habito={name} id={id}
-                        contagemAtual={currentSequence} contagemRecorde={highestSequence}
-                        concluidos={habitosConcluidos}
-                        setConcluidos={(valor) => setHabitosConcluidos(valor)}
-                    />
-                )
-            })
-            }
-            {/* <Menu /> */}
+            <Header />
+            <Container>
+                <Today>COLOCAR O DIA DE HOJE</Today>
+                {resultado === 0 ?
+                    <Nohabits>Nenhum hábito concluído ainda</Nohabits>:
+                    <Hashabits>{resultado}% dos hábitos concluídos</Hashabits>
+                }
+                {habitosHoje.map(habito => {
+                    const { id, name, currentSequence, highestSequence } = habito;
+                    return (
+                        <HabitoHoje key={id} habito={name} id={id}
+                            contagemAtual={currentSequence} contagemRecorde={highestSequence}
+                            concluidos={habitosConcluidos}
+                            setConcluidos={(valor) => setHabitosConcluidos(valor)} />
+                    )
+                })
+                }
+            </Container>
+            <Menu />
         </>
     )
 }
+
+
+const Container = styled.div`
+    background-color: #E5E5E5;
+    width: 375px;
+    height: 597px;
+    padding-bottom: 100px;
+    margin: 70px 0;
+`
+const Today = styled.h2`
+    font-size: 23px;
+    color: var(--cor-azul-escuro);
+    padding-top: 28px;
+    margin-bottom: 3px;
+    margin-left: 18px;
+`
+const Nohabits = styled.p`
+    font-size: 18px;
+    color: var(--cor-cinza-hoje);
+    margin-left: 18px;
+`
+
+const Hashabits = styled.p`
+    font-size: 18px;
+    color: var(--cor-verde);
+    margin-left: 18px;
+`
+
+
 
 export default TelaHoje;

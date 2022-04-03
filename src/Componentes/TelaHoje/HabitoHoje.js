@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 function HabitoHoje(props) {
 
-    const { habito, contagemAtual, contagemRecorde, 
+    const { habito, contagemAtual, contagemRecorde,
         id, concluidos, setConcluidos } = props;
 
     const { token, setToken } = useContext(UserContext);
@@ -17,37 +17,37 @@ function HabitoHoje(props) {
         }
     }
 
-    function marcarHabito () {
-        SetAtual(atual+1);
-        setConcluidos(concluidos+1);
+    function marcarHabito() {
+        SetAtual(atual + 1);
+        setConcluidos(concluidos + 1);
         console.log("Marcar hábito como concluido");
-            const promise = axios.post(
+        const promise = axios.post(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,
-            {},config)
-            promise.then(response => {
-                const {data} = response;
-                console.log(data);
-                console.log("Deu bom para marcar hábito");
-            })
-            promise.catch(err => console.log(err.response.statusText));
+            {}, config)
+        promise.then(response => {
+            const { data } = response;
+            console.log(data);
+            console.log("Deu bom para marcar hábito");
+        })
+        promise.catch(err => console.log(err.response.statusText));
     }
 
-    function desmarcarHabito () {
-        SetAtual(atual-1);
-        setConcluidos(concluidos-1);
+    function desmarcarHabito() {
+        SetAtual(atual - 1);
+        setConcluidos(concluidos - 1);
         console.log("Remover hábito da lista");
         const promise = axios.post(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
-            {},config)
-            promise.then(response => {
-                const {data} = response;
-                console.log(data);
-                console.log("Deu bom para desmarcar hábito");
-            })
-            promise.catch(err => console.log(err.response.statusText));
+            {}, config)
+        promise.then(response => {
+            const { data } = response;
+            console.log(data);
+            console.log("Deu bom para desmarcar hábito");
+        })
+        promise.catch(err => console.log(err.response.statusText));
     }
 
-    function toggle () {
+    function toggle() {
         setIconeSelecionado(!iconeSelecionado);
         // console.log(iconeSelecionado);
         console.log("Entrar no if");
@@ -71,15 +71,15 @@ function HabitoHoje(props) {
         <Container>
             <div>
                 <h1>{habito}</h1>
-                <Atual selecionado={iconeSelecionado}> 
-                Sequência Atual: <span> {atual} 
-                {atual === 1? " dia" : " dias"} 
-                </span> 
+                <Atual selecionado={iconeSelecionado}>
+                    Sequência atual: <span> {atual}
+                        {atual === 1 ? " dia" : " dias"}
+                    </span>
                 </Atual>
-                <Recorde atual={atual} recorde={aux}> 
-                Seu recorde: <span> {aux} 
-                {aux === 1? " dia" : " dias"} 
-                </span> 
+                <Recorde atual={atual} recorde={aux}>
+                    Seu recorde: <span> {aux}
+                        {aux === 1 ? " dia" : " dias"}
+                    </span>
                 </Recorde>
             </div>
             <Icon onClick={() => toggle()} selecionado={iconeSelecionado}>
@@ -89,52 +89,68 @@ function HabitoHoje(props) {
     )
 }
 
-function corIcone (selecionado) {
+function corIcone(selecionado) {
     /* Por algum motivo esse selecionado está invertido em relação ao estado
     por isso coloquei o not nele */
-    if (!selecionado) return "blue";
-    else return "gray";
+    if (!selecionado) return "var(--cor-verde)";
+    else return "var(--cor-cinza-check)";
 }
 
-function corAtual (selecionado) {
-    if (!selecionado) return "blue";
+function corAtual(selecionado) {
+    if (!selecionado) return "var(--cor-verde)";
     else return "black";
 }
 
-function corRecorde (atual, recorde) {
+function corRecorde(atual, recorde) {
     if (atual < recorde) return "black"
-    else return "blue"
+    else return "var(--cor-verde)"
 }
 
 const Container = styled.div`
     width: 340px;
-    height: 91px;
+    height: 94px;
     border-radius: 5px;
-    border: 1px solid black;
+    border: 1px solid var(--cor-cinza-borda);
     display: flex;
     justify-content: space-between;
-    margin: 10px 0;
     padding-left: 10px;
+    margin: 10px 0;
+    margin-left: 18px;
     background-color: #FFFFFF;
 
     h1 {
-        margin: 10px 0;
+        font-size: 20px;
+        color: var(--cor-cinza-letras);
+        padding-top: 13px;
+        padding-left: 15px;
+        margin-bottom: 7px;
+
     }
 `
 const Atual = styled.p`
+    font-size: 13px;
+    color: var(--color-cinza-letras);
+    padding-left: 15px;
+    margin-bottom: 3px;
+
     span {
         color: ${(props) => corAtual(props.selecionado)};
 `
 const Recorde = styled.p`
+    font-size: 13px;
+    color: var(--color-cinza-letras);
+    padding-left: 15px;
+
     span {
         color: ${(props) => corRecorde(props.atual, props.recorde)};
 `
 
 const Icon = styled.button`
-    font-size: 25px;
-    background-color: white;
+    font-size: 69px;
+    background-color: #FFFFFF;
     border: none;
     color: ${(props) => corIcone(props.selecionado)};
+    padding-top: 10px;
 `
 
 

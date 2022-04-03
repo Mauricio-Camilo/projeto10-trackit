@@ -22,6 +22,8 @@ const Container = styled.div`
     font-family: 'Playball', cursive;
     width: 375px;
     height: 70px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    z-index: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;

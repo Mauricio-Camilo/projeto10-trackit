@@ -8,7 +8,7 @@ import axios from "axios";
 
 function InserirHabito(props) {
 
-    const loading = <Grid color="red" height={50} width={80} />;  
+    const loading = <Grid color="#FFFFFF" height={20} width={50} />;
 
     const {setVisivel, habito, setHabito, 
     diasSelecionados, setDiasSelecionados} = props;
@@ -80,6 +80,7 @@ de cancelar, para colocar a tela no estado inicial */
         })
     }
 
+    // COLOCAR O FORM COM REQUIRED NESSE INPUT
     return (
         <>
             {cancelarHabito ?
@@ -104,7 +105,7 @@ de cancelar, para colocar a tela no estado inicial */
                         )}
                     </Days>
                     <Actions>
-                        <p onClick={() => ResetarHabito()}>Cancelar</p>
+                        <Cancelar onClick={() => ResetarHabito()}>Cancelar</Cancelar>
                         <Button selecionado={selecionado} onClick={() => SalvarHabito()}>{salvar}</Button>
                     </Actions>
                 </Container>
@@ -116,23 +117,23 @@ de cancelar, para colocar a tela no estado inicial */
 /* Função que responde a um determinado estado vindo do mapa por props que vai alterar
 a cor do botão ao clicar no dia da semana, a cor depende apenas do estado */
 function corBotao(selecionado) {
-    if (selecionado) return "gray";
-    else return "white";
+    if (selecionado) return "var(--cor-cinza-dias)";
+    else return "#FFFFFF";
 }
 
 function mudarBotao(selecionado) {
-    if (selecionado) return "black";
-    else return "blue";
+    if (selecionado) return "0.7";
+    else return "1";
 }
 
-function desabilitarBotao (selecionado) {
+function resetarBotao (selecionado) {
     if (selecionado === true) return "none";
     else return "display";
 }
 
-function corInput (selecionado) {
-    if (selecionado) return "gray";
-    else return "white";
+function corInput(selecionado) {
+    if (selecionado) return "var(--cor-cinza-check)";
+    else return "#FFFFFF";
 }
 
 const Container = styled.div`
@@ -147,16 +148,23 @@ const Container = styled.div`
             width: 303px;
             height: 45px;
             font-size: 20px;
-            color: var(--cor-cinza-input);
+            color: var(--cor-cinza-letras);
             border-radius: 5px;
             border: 1px solid var(--cor-cinza-borda);
-            margin: 18px 19px;
+            margin: 0 19px;
+            margin-top: 18px;
+            margin-bottom: 10px;
             padding-left: 11px;
             background-color: ${(props) => corInput(props.selecionado)};
-            pointer-events: ${(props) => desabilitarBotao(props.selecionado)};;
+            pointer-events: ${(props) => resetarBotao(props.selecionado)};;
         }
 `
 
+const Days = styled.div`
+
+     display: flex;
+     margin-right: 15px;
+`
 const DayWeek = styled.button`
     font-size: 19px;
     color: var(--cor-cinza-borda);
@@ -174,23 +182,13 @@ const DayWeek = styled.button`
 // Essa props selecionado serve para ver se eu cliquei ou não no dia
 // Quando o botão é clicado, ele chama essa função pata alterar a cor dependendo do clique.
 
-const Days = styled.div`
 
-    display: flex;
-    padding-right: 50px;
-    background-color: white;
-`
 const Actions = styled.div`
     display: flex;
     justify-content: right;
     align-items: center;
     padding-top: 29px;
     padding-right: 16px;
-
-        p {
-            font-size: 16px;
-            color: var(--cor-botao-footer);
-        }
 `
 const Button = styled.button`
     font-size: 16px;
@@ -201,10 +199,18 @@ const Button = styled.button`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    margin-left: 19px;
-    pointer-events: ${(props) => desabilitarBotao(props.selecionado)};
-    background-color: ${(props) => mudarBotao(props.selecionado)};
+    border: var(--cor-azul-claro)
+    margin-left: 10px;
+    background-color: var(--cor-azul-claro);
+    opacity: ${(props) => mudarBotao(props.selecionado)};
+    pointer-events: ${(props) => resetarBotao(props.selecionado)}; 
 `
+
+const Cancelar = styled.p`
+    font-size: 16px;
+    color: var(--cor-azul-claro);
+`
+
 
 
 export default InserirHabito;

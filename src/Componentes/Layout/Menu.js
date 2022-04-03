@@ -9,6 +9,8 @@ function Menu() {
         <Container>
             <Habitos onClick={() => navigate("/habitos")}>
             Hábitos </Habitos>
+            <Hoje onClick={() => navigate("/hoje")}>
+            Hoje </Hoje>
             <Historico onClick={() => navigate("/historico")}>
             Histórico </Historico>
         </Container>
@@ -16,11 +18,12 @@ function Menu() {
 }
 
 const Container = styled.div`
+    width: 375px;
+    height: 70px;
     font-family: 'Lexend Deca', sans-serif;
     font-size: 14px;
     color: var(--cor-azul-claro);
-    width: 375px;
-    height: 70px;
+    z-index: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,8 +36,9 @@ const Container = styled.div`
 const Habitos = styled.p`
     margin-left: 36px;
 `
+const Hoje = styled.p`
+`
 const Historico = styled.p`
     margin-right: 36px;
 `
-
 export default Menu;

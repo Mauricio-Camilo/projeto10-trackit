@@ -120,8 +120,8 @@ const Login = styled.button`
     border-radius: 5px;
     margin-left: 35px;
     margin-bottom: 25px;
-    opacity: ${(props) => mudarBotao(props.selecionado)};
     background-color: var(--cor-azul-claro);
+    opacity: ${(props) => mudarBotao(props.selecionado)};
     pointer-events: ${(props) => resetarBotao(props.selecionado)};
 
 `
