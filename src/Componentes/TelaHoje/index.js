@@ -3,12 +3,24 @@ import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import dayjs from "dayjs";
 
 import Header from "../Layout/Header";
 import Menu from "../Layout/Menu";
 import HabitoHoje from "./HabitoHoje";
 
 function TelaHoje() {
+
+    let updateLocale = require('dayjs/plugin/updateLocale')
+    dayjs.extend(updateLocale);
+  
+    dayjs.updateLocale('en', {
+      weekdays: [
+        "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"
+      ]
+    })
+  
+    const dataBR = dayjs().format('dddd, DD/MM')
 
     const { token, setToken } = useContext(UserContext);
 
@@ -50,7 +62,7 @@ function TelaHoje() {
         <>
             <Header />
             <Container>
-                <Today>COLOCAR O DIA DE HOJE</Today>
+                <Today>{dataBR}</Today>
                 {resultado === 0 ?
                     <Nohabits>Nenhum hábito concluído ainda</Nohabits>:
                     <Hashabits>{resultado}% dos hábitos concluídos</Hashabits>
