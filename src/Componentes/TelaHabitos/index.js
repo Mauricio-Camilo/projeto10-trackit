@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 
-
 import styled from "styled-components";
 
 import Header from "../Layout/Header";
@@ -16,7 +15,7 @@ function TelaHabitos() {
 
     const [dadosHabito, setDadosHabito] = useState([]);
 
-    /* Os dois estaod abaixo foram criados aqui e passados para os filhos, assim
+    /* Os dois estados abaixo foram criados aqui e passados para os filhos, assim
     o input mantém os dados digitados enquanto não for enviado para a API */
 
     // Estado criado que salva o hábito digitado no input

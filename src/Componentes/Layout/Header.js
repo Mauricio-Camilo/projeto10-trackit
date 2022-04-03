@@ -6,8 +6,6 @@ function Header() {
 
     const { perfil, setPerfil } = useContext(UserContext);
 
-    console.log(perfil);
-
     return (
         <Container>
             <SubTitle>TrackIt</SubTitle>

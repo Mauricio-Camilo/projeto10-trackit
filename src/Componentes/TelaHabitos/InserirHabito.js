@@ -60,7 +60,6 @@ criar hábitos e reabilitar o botão de + no componente pai de inserir hábitos 
 /* Função que faz o post para o servidor do hábito criado, e também faz o efeito
 de cancelar, para colocar a tela no estado inicial */
     function SalvarHabito() {
-        console.log("fui clicado");
         setSalvar(loading);
         setSelecionado(true);
         const promise = axios.post(APIPost, {
@@ -68,9 +67,8 @@ de cancelar, para colocar a tela no estado inicial */
             days: [...diasSelecionados.keys()] // Pega apenas os ids do mapa
         }, config);
         promise.then(response => {
-            const { data } = response;
-            console.log(data);
-            console.log("deu bom");
+            // const { data } = response;
+            // console.log("deu bom");
             ResetarHabito();
         }
         )
@@ -79,6 +77,8 @@ de cancelar, para colocar a tela no estado inicial */
             ResetarHabito();
         })
     }
+
+    console.log(habito);
 
     // COLOCAR O FORM COM REQUIRED NESSE INPUT
     return (
@@ -210,8 +210,5 @@ const Cancelar = styled.p`
     font-size: 16px;
     color: var(--cor-azul-claro);
 `
-
-
-
 export default InserirHabito;
 
