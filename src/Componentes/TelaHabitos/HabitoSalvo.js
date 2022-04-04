@@ -73,7 +73,7 @@ function corBotao(selecionado) {
 }
 
 const Container = styled.div`
-    width: 340px;
+    max-width: 340px;
     min-height: 91px;
     border-radius: 5px;
     padding-bottom: 10px;
@@ -93,6 +93,7 @@ const Container = styled.div`
 const Div = styled.div`
     display: flex;
     justify-content: space-between;
+    max-width: 340px;
 `
 
 const Icon = styled.button`
@@ -105,8 +106,8 @@ const Icon = styled.button`
 
 const Days = styled.div`
     display: flex;
-    margin-left: -4px;
-    padding-right: 50px;
+    gap: 4px;
+    margin-left: 19px;
 `
 
 const DayWeek = styled.button`
@@ -119,8 +120,6 @@ const DayWeek = styled.button`
     align-items: center;
     border-radius: 5px;
     border: 1px solid var(--cor-cinza-borda);
-    margin-left: 19px;
-    margin-right: 1px;
     background-color: ${(props) => corBotao(props.selecionado)};; 
 `
 

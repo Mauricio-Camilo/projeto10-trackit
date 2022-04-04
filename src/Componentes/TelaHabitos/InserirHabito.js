@@ -142,7 +142,7 @@ function corInput(selecionado) {
 
 const Container = styled.div`
     width: 340px;
-    height: 200px;
+    min-height: 180px;
     border-radius: 5px;
     margin: 0 auto;
     margin-bottom: 28px;
@@ -166,7 +166,8 @@ const Container = styled.div`
 
 const Days = styled.div`
      display: flex;
-     margin-right: 15px;
+     gap: 4px;
+     margin-left: 19px;
 `
 const DayWeek = styled.button`
     font-size: 19px;
@@ -178,8 +179,6 @@ const DayWeek = styled.button`
     align-items: center;
     border-radius: 5px;
     border: 1px solid var(--cor-cinza-borda);
-    margin-left: 19px;
-    margin-right: 1px;
     background-color: ${(props) => corBotao(props.selecionado)}; 
 `
 // Essa props selecionado serve para ver se eu cliquei ou não no dia

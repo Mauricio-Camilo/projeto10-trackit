@@ -43,8 +43,8 @@ function TelaHoje() {
         const promise = axios.get(API, config);
         promise.then(response => {
             const { data } = response;
-            // console.log("Deu bom");
-            // console.log(data);
+            console.log("Deu bom");
+            console.log(data);
             setHabitosHoje(data);
             // console.log(habitosHoje);
         });
@@ -53,7 +53,7 @@ function TelaHoje() {
         })
     }, []);
 
-    console.log(habitosConcluidos)
+    // console.log(habitosConcluidos)
 
     let resultado = 0;
     resultado = parseInt((habitosConcluidos / habitosHoje.length) * 100);
@@ -68,11 +68,11 @@ function TelaHoje() {
                     <Hashabits>{resultado}% dos hábitos concluídos</Hashabits>
                 }
                 {habitosHoje.map(habito => {
-                    const { id, name, currentSequence, highestSequence } = habito;
+                    const { id, name, done, currentSequence, highestSequence } = habito;
                     // setAtual(currentSequence);
                     // setRecorde(highestSequence);
                     return (
-                        <HabitoHoje key={id} habito={name} id={id}
+                        <HabitoHoje key={id} habito={name} id={id} status={done}
                             contagemAtual={currentSequence} contagemRecorde={highestSequence}
                             concluidos={habitosConcluidos}
                             setConcluidos={(valor) => setHabitosConcluidos(valor)} />

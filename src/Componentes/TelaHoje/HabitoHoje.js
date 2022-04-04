@@ -8,9 +8,7 @@ import styled from "styled-components";
 function HabitoHoje(props) {
 
     const { habito, contagemAtual, contagemRecorde,
-        id, concluidos, setConcluidos } = props;
-
-    const { token } = useContext(UserContext);
+        id, status, concluidos, setConcluidos } = props;
 
     const tokenLS = localStorage.getItem("token");
 
@@ -21,6 +19,8 @@ function HabitoHoje(props) {
     }
 
     function marcarHabito() {
+        console.log("entrei em marcar habito");
+        console.log(iconeSelecionado);
         setAtual(atual + 1);
         setConcluidos(concluidos + 1);
         const promise = axios.post(
@@ -28,11 +28,14 @@ function HabitoHoje(props) {
             {}, config)
         promise.then(response => {
             const { data } = response;
+            console.log("Deu bom");
         })
         promise.catch(err => console.log(err.response.statusText));
     }
 
     function desmarcarHabito() {
+        console.log("entrei em desmarcar habito");
+        console.log(iconeSelecionado);
         setAtual(atual - 1);
         setConcluidos(concluidos - 1);
         const promise = axios.post(
@@ -40,55 +43,82 @@ function HabitoHoje(props) {
             {}, config)
         promise.then(response => {
             const { data } = response;
+            console.log("Deu bom");
         })
         promise.catch(err => console.log(err.response.statusText));
     }
 
     function toggle() {
         setIconeSelecionado(!iconeSelecionado);
-        if (iconeSelecionado === true) marcarHabito();
+        if (iconeSelecionado === false) marcarHabito();
         else desmarcarHabito();
     }
 
-    // Estado usado para mudar a cor do icone ao ser clicado
-    const [iconeSelecionado, setIconeSelecionado] = useState(true);
+    function toggle2() {
+        setIconeSelecionado(!iconeSelecionado);
+        if (iconeSelecionado === false) desmarcarHabito();
+        else marcarHabito();
+    }
 
+    // Estado usado para mudar a cor do icone ao ser clicado
+    const [iconeSelecionado, setIconeSelecionado] = useState(false);
 
     // Estados usados para renderizar na tela a contagem dos hábitos
     const [atual, setAtual] = useState(contagemAtual);
     const [recorde, setRecorde] = useState(contagemRecorde);
 
     return (
+
         <Container>
-            <div>
-                <h1>{habito}</h1>
-                <Atual selecionado={iconeSelecionado}>
-                    Sequência atual: <span> {atual}
-                        {atual === 1 ? " dia" : " dias"}
-                    </span>
-                </Atual>
-                <Recorde atual={atual} recorde={recorde}>
-                    Seu recorde: <span> {recorde}
-                        {recorde === 1 ? " dia" : " dias"}
-                    </span>
-                </Recorde>
-            </div>
-            <Icon onClick={() => toggle()} selecionado={iconeSelecionado}>
-                <ion-icon name="checkbox"></ion-icon>
-            </Icon>
+            {!status ?
+                <>             
+                <div>
+                    <h1>{habito}</h1>
+                    <Atual selecionado={iconeSelecionado}>
+                        Sequência atual: <span> {atual}
+                            {atual === 1 ? " dia" : " dias"}
+                        </span>
+                    </Atual>
+                    <Recorde atual={atual} recorde={recorde}>
+                        Seu recorde: <span> {recorde}
+                            {recorde === 1 ? " dia" : " dias"}
+                        </span>
+                    </Recorde>
+                </div>
+                    <Icon onClick={() => toggle()} selecionado={iconeSelecionado}>
+                        <ion-icon name="checkbox"></ion-icon>
+                    </Icon>
+                </>
+                :
+                <>             
+                <div>
+                    <h1>{habito}</h1>
+                    <Atual selecionado={!iconeSelecionado}>
+                        Sequência atual: <span> {atual}
+                            {atual === 1 ? " dia" : " dias"}
+                        </span>
+                    </Atual>
+                    <Recorde atual={atual} recorde={recorde}>
+                        Seu recorde: <span> {recorde}
+                            {recorde === 1 ? " dia" : " dias"}
+                        </span>
+                    </Recorde>
+                </div>
+                    <Icon onClick={() => toggle2()} selecionado={!iconeSelecionado}>
+                        <ion-icon name="checkbox"></ion-icon>
+                    </Icon>
+                </>}
         </Container>
     )
 }
 
 function corIcone(selecionado) {
-    /* Por algum motivo esse selecionado está invertido em relação ao estado
-    por isso coloquei o not nele */
-    if (!selecionado) return "var(--cor-verde)";
+    if (selecionado) return "var(--cor-verde)";
     else return "var(--cor-cinza-check)";
 }
 
 function corAtual(selecionado) {
-    if (!selecionado) return "var(--cor-verde)";
+    if (selecionado) return "var(--cor-verde)";
     else return "black";
 }
 

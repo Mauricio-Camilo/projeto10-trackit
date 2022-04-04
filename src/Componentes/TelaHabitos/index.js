@@ -105,6 +105,7 @@ function TelaHabitos() {
 const Container = styled.div`
     background-color: #E5E5E5;
     width: 375px;
+    min-height: 667px;
     height: 100%;
     padding-bottom: 100px;
     margin-top: 70px;
