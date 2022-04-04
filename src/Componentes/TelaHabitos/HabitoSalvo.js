@@ -9,9 +9,11 @@ function HabitoSalvo(props) {
 
     const { token, setToken, } = useContext(UserContext);
 
+    const tokenLS = localStorage.getItem("token");
+
     const config = {
         headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${tokenLS}`
         }
     }
 
@@ -30,7 +32,7 @@ function HabitoSalvo(props) {
         config);
         promise.then (response => {
             console.log("deu bom");
-            // window.location.reload();
+            window.location.reload();
         });
         promise.catch(err => {
             console.log("Deu ruim");

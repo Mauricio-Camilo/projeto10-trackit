@@ -15,9 +15,11 @@ function InserirHabito(props) {
 
     const { token, setToken } = useContext(UserContext);
 
+    const tokenLS = localStorage.getItem("token");
+    
     const config = {
         headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${tokenLS}`
         }
     }
 
@@ -73,7 +75,7 @@ de cancelar, para colocar a tela no estado inicial */
         promise.then(response => {
             resetarHabito();
             zerarInputs();
-            // window.location.reload();
+            window.location.reload();
         }
         )
         promise.catch(response => {

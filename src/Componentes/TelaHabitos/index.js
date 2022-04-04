@@ -13,6 +13,8 @@ function TelaHabitos() {
 
     const { token, setToken, perfil, setPerfil } = useContext(UserContext);
 
+    const tokenLS = localStorage.getItem("token");
+
     const [dadosHabito, setDadosHabito] = useState([]);
 
     /* Os dois estados abaixo foram criados aqui e passados para os filhos, assim
@@ -28,7 +30,7 @@ function TelaHabitos() {
 
     const config = {
         headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${tokenLS}`
         }
     }
 

@@ -6,11 +6,13 @@ function Header() {
 
     const { perfil, setPerfil } = useContext(UserContext);
 
+    const perfilLS = localStorage.getItem("perfil");
+
     return (
         <Container>
             <SubTitle>TrackIt</SubTitle>
             {/* <Background> */}
-                <Image src={perfil}></Image>
+                <Image src={perfilLS}></Image>
             {/* </Background> */}
         </Container>
     )

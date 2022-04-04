@@ -3,7 +3,6 @@ import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Header from "../Layout/Header"
 import logo from "../../assets/logo.svg";
 import { Grid } from 'react-loader-spinner';
 
@@ -34,7 +33,8 @@ function TelaLogin() {
             const { data } = response;
             setToken(data.token);
             setPerfil(data.image);
-            // const tokenLS = localStorage.setItem("token", data.token);
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("perfil", data.image);
             navigate("/habitos"); 
         }
         )
@@ -67,7 +67,6 @@ function TelaLogin() {
             <Hiperlink onClick={() => navigate("/cadastro")}>
                 Não tem uma conta? Cadastre-se </Hiperlink>
         </Container>
-
     )
 }
 

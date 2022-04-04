@@ -1,7 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import dayjs from "dayjs";
 
@@ -22,20 +21,21 @@ function TelaHoje() {
   
     const dataBR = dayjs().format('dddd, DD/MM')
 
-    const { token, setToken, percentage, setPercentage } = useContext(UserContext);
+    const { token, setPercentage, atual, 
+            setAtual, recorde, setRecorde } = useContext(UserContext);
+
+    const tokenLS = localStorage.getItem("token");
 
     // Estado que guarda os habitos que vieram da API
     const [habitosHoje, setHabitosHoje] = useState([]);
 
     const [habitosConcluidos, setHabitosConcluidos] = useState(0);
 
-    const navigate = useNavigate();
-
     const API = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
 
     const config = {
         headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${tokenLS}`
         }
     }
 
@@ -43,9 +43,10 @@ function TelaHoje() {
         const promise = axios.get(API, config);
         promise.then(response => {
             const { data } = response;
-            console.log("Deu bom");
-            console.log(data);
+            // console.log("Deu bom");
+            // console.log(data);
             setHabitosHoje(data);
+            // console.log(habitosHoje);
         });
         promise.catch(response => {
             console.log("Deu ruim");
@@ -57,8 +58,6 @@ function TelaHoje() {
     let resultado = 0;
     resultado = parseInt((habitosConcluidos / habitosHoje.length) * 100);
     setPercentage(resultado);
-    // console.log(resultado);
-
     return (
         <>
             <Header />
@@ -70,6 +69,8 @@ function TelaHoje() {
                 }
                 {habitosHoje.map(habito => {
                     const { id, name, currentSequence, highestSequence } = habito;
+                    // setAtual(currentSequence);
+                    // setRecorde(highestSequence);
                     return (
                         <HabitoHoje key={id} habito={name} id={id}
                             contagemAtual={currentSequence} contagemRecorde={highestSequence}
@@ -110,7 +111,4 @@ const Hashabits = styled.p`
     color: var(--cor-verde);
     margin-left: 18px;
 `
-
-
-
 export default TelaHoje;
