@@ -22,7 +22,7 @@ function TelaHoje() {
   
     const dataBR = dayjs().format('dddd, DD/MM')
 
-    const { token, setToken } = useContext(UserContext);
+    const { token, setToken, percentage, setPercentage } = useContext(UserContext);
 
     // Estado que guarda os habitos que vieram da API
     const [habitosHoje, setHabitosHoje] = useState([]);
@@ -55,7 +55,8 @@ function TelaHoje() {
     console.log(habitosConcluidos)
 
     let resultado = 0;
-    resultado = parseInt((habitosConcluidos / habitosHoje.length) * 100)
+    resultado = parseInt((habitosConcluidos / habitosHoje.length) * 100);
+    setPercentage(resultado);
     // console.log(resultado);
 
     return (

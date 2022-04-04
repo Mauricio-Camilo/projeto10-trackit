@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 
+
 import styled from "styled-components";
 
 function HabitoHoje(props) {
@@ -20,14 +21,11 @@ function HabitoHoje(props) {
     function marcarHabito() {
         SetAtual(atual + 1);
         setConcluidos(concluidos + 1);
-        console.log("Marcar hábito como concluido");
         const promise = axios.post(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,
             {}, config)
         promise.then(response => {
             const { data } = response;
-            console.log(data);
-            console.log("Deu bom para marcar hábito");
         })
         promise.catch(err => console.log(err.response.statusText));
     }
@@ -35,26 +33,20 @@ function HabitoHoje(props) {
     function desmarcarHabito() {
         SetAtual(atual - 1);
         setConcluidos(concluidos - 1);
-        console.log("Remover hábito da lista");
         const promise = axios.post(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
             {}, config)
         promise.then(response => {
             const { data } = response;
-            console.log(data);
-            console.log("Deu bom para desmarcar hábito");
         })
         promise.catch(err => console.log(err.response.statusText));
     }
 
     function toggle() {
         setIconeSelecionado(!iconeSelecionado);
-        // console.log(iconeSelecionado);
-        console.log("Entrar no if");
         if (iconeSelecionado === true) marcarHabito();
         else desmarcarHabito();
     }
-
 
     // Estado usado para mudar a cor do icone ao ser clicado
     const [iconeSelecionado, setIconeSelecionado] = useState(true);
@@ -76,9 +68,9 @@ function HabitoHoje(props) {
                         {atual === 1 ? " dia" : " dias"}
                     </span>
                 </Atual>
-                <Recorde atual={atual} recorde={aux}>
-                    Seu recorde: <span> {aux}
-                        {aux === 1 ? " dia" : " dias"}
+                <Recorde atual={atual} recorde={recorde}>
+                    Seu recorde: <span> {recorde}
+                        {recorde === 1 ? " dia" : " dias"}
                     </span>
                 </Recorde>
             </div>
@@ -108,7 +100,7 @@ function corRecorde(atual, recorde) {
 
 const Container = styled.div`
     width: 340px;
-    height: 94px;
+    min-height: 94px;
     border-radius: 5px;
     border: 1px solid var(--cor-cinza-borda);
     display: flex;
@@ -152,8 +144,4 @@ const Icon = styled.button`
     color: ${(props) => corIcone(props.selecionado)};
     padding-top: 10px;
 `
-
-
-
-
 export default HabitoHoje

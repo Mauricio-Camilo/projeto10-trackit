@@ -13,8 +13,11 @@ function App() {
 
     const [token, setToken] = useState(""); // Verificar se existe o token no local storage
     const [perfil, setPerfil] = useState("");
+    const [percentage, setPercentage] = useState("");
 
-    const context = {token, setToken, perfil, setPerfil};
+    const context = {token, setToken, perfil, setPerfil, percentage, setPercentage};
+
+    // const tokenLS = localStorage.setItem("token", token);
 
     return (
         <UserContext.Provider value={context}>
@@ -29,28 +32,7 @@ function App() {
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>
-
     )
 }
-
-// ESTRUTURA DE COMPONENTES ESTILIZADOS DIRETAMENTE NO JSX
-
-// import styled from "styled-components";
-
-// return (
-//     <Container>
-//         <h1>Olá mundo!</h1>
-//     </Container>
-// )
-
-// const Container = styled.div `
-//     width: 100px;
-// 	height: 100px;
-// 	background: blue;
-
-// 	h1 {
-// 		color: red;
-// 	}
-// `;
 
 export default App;

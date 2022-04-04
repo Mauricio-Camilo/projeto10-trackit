@@ -1,18 +1,21 @@
 import { useState, useContext } from "react";
 import UserContext from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
 
 function HabitoSalvo(props) {
 
-    const { token, setToken } = useContext(UserContext);
+    const { token, setToken, } = useContext(UserContext);
 
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`
         }
     }
+
+    const navigate = useNavigate();
 
     const { id, habito, dias } = props;
 
@@ -21,16 +24,21 @@ function HabitoSalvo(props) {
 
     function deletarHabito () {
         console.log("fui clicado para deletar hábito");
+        let confirma = window.confirm("Deseja mesmo deletar o hábito?");
+        if (confirma) {
         const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
         config);
         promise.then (response => {
-            const {data} = response;
             console.log("deu bom");
-            console.log(data);}
-        )
+            // window.location.reload();
+        });
         promise.catch(err => {
             console.log("Deu ruim");
         })
+    }
+        else {
+            return 
+        }   
     }
 
     return (
@@ -64,8 +72,9 @@ function corBotao(selecionado) {
 
 const Container = styled.div`
     width: 340px;
-    height: 91px;
+    min-height: 91px;
     border-radius: 5px;
+    padding-bottom: 10px;
     margin: 0 auto;
     margin-bottom: 30px;
     background-color: #FFFFFF;

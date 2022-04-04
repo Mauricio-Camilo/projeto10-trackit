@@ -32,9 +32,9 @@ function TelaLogin() {
         });
         promise.then(response => {
             const { data } = response;
-            // console.log(data);
             setToken(data.token);
             setPerfil(data.image);
+            // const tokenLS = localStorage.setItem("token", data.token);
             navigate("/habitos"); 
         }
         )

@@ -50,16 +50,20 @@ function InserirHabito(props) {
 
 /* Função criada para colocar os estados em condição de esconder a tela de 
 criar hábitos e reabilitar o botão de + no componente pai de inserir hábitos */
-    function ResetarHabito() {
+    function resetarHabito() {
         setCancelarHabito(true);
         setVisivel(false);
+    }
+
+/* Função criada para zerar os inputs no caso do hábito ter sido salvo com sucesso */
+    function zerarInputs () {
         setHabito();
         setDiasSelecionados(new Map());
     }
 
 /* Função que faz o post para o servidor do hábito criado, e também faz o efeito
 de cancelar, para colocar a tela no estado inicial */
-    function SalvarHabito() {
+    function salvarHabito() {
         setSalvar(loading);
         setSelecionado(true);
         const promise = axios.post(APIPost, {
@@ -67,19 +71,17 @@ de cancelar, para colocar a tela no estado inicial */
             days: [...diasSelecionados.keys()] // Pega apenas os ids do mapa
         }, config);
         promise.then(response => {
-            // const { data } = response;
-            // console.log("deu bom");
-            ResetarHabito();
+            resetarHabito();
+            zerarInputs();
+            // window.location.reload();
         }
         )
         promise.catch(response => {
             alert("Falha no envio dos dados, por favor tente novamente");
-            ResetarHabito();
+            resetarHabito();
         })
     }
-
-    console.log(habito);
-
+    
     // COLOCAR O FORM COM REQUIRED NESSE INPUT
     return (
         <>
@@ -105,8 +107,8 @@ de cancelar, para colocar a tela no estado inicial */
                         )}
                     </Days>
                     <Actions>
-                        <Cancelar onClick={() => ResetarHabito()}>Cancelar</Cancelar>
-                        <Button selecionado={selecionado} onClick={() => SalvarHabito()}>{salvar}</Button>
+                        <Cancelar onClick={() => resetarHabito()}>Cancelar</Cancelar>
+                        <Button selecionado={selecionado} onClick={() => salvarHabito()}>{salvar}</Button>
                     </Actions>
                 </Container>
             }
@@ -161,7 +163,6 @@ const Container = styled.div`
 `
 
 const Days = styled.div`
-
      display: flex;
      margin-right: 15px;
 `
