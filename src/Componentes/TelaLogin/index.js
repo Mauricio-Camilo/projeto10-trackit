@@ -4,13 +4,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo.svg";
-import { Grid } from 'react-loader-spinner';
+import { ThreeDots } from 'react-loader-spinner';
 
 function TelaLogin() {
 
     const { setToken, setPerfil } = useContext(UserContext);
 
-    const loading = <Grid color="#FFFFFF" height={25} width={50} />;
+    const loading = <ThreeDots color="#FFFFFF" />;
     const [entrar, setEntrar] = useState("Entrar");
 
     const [selecionado, setSelecionado] = useState(false);
@@ -106,8 +106,7 @@ const Inputs = styled.div`
         background-color: ${(props) => corInput(props.selecionado)};
         pointer-events: ${(props) => resetarBotao(props.selecionado)};;
     }
-    `
-
+`
 const Login = styled.button`
     font-size: 22px;
     color: #FFFFFF;
@@ -122,7 +121,6 @@ const Login = styled.button`
     background-color: var(--cor-azul-claro);
     opacity: ${(props) => mudarBotao(props.selecionado)};
     pointer-events: ${(props) => resetarBotao(props.selecionado)};
-
 `
 const Hiperlink = styled.p`
     font-size: 14px;

@@ -22,13 +22,13 @@ const Container = styled.div`
     width: 375px;
     height: 667px;
     padding-bottom: 100px;
+    padding-top: 28px;
     margin-top: 70px;
     margin-bottom: 70px;
 
         h1 {
-            font-size: 18px;
+            font-size: 23px;
             color: var(--cor-azul-escuro);
-            padding-top: 20px;
             margin-left: 17px;
         }
 `
@@ -38,5 +38,4 @@ const Text = styled.p`
     padding-top: 20px;
     margin-left: 17px;
 `
-
 export default TelaHistorico;

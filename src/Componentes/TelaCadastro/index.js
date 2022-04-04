@@ -3,12 +3,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo.svg";
-import { Grid } from 'react-loader-spinner';
-
+import { ThreeDots } from 'react-loader-spinner';
 
 function TelaCadastro() {
 
-    const loading = <Grid color="#FFFFFF" height={25} width={50} />;
+    const loading = <ThreeDots color="#FFFFFF" />;
+    
     const [selecionado, setSelecionado] = useState(false);
     const [cadastrar, setCadastrar] = useState("Cadastrar");
     const [email, setEmail] = useState("");
@@ -40,12 +40,8 @@ function TelaCadastro() {
             password: senha
         });
         promise.then(response => {
-            const { data } = response;
-            console.log(data);
-            console.log("deu bom");
             navigate("/");
-        }
-        )
+        })
         promise.catch(response => {
             alert("Falha no envio dos dados, por favor tente novamente");
             setCadastrar("Cadastrar")
@@ -147,7 +143,5 @@ const Hiperlink = styled.p`
     text-align: center;
     text-decoration: underline;
     color: var(--cor-azul-claro);
-  
 `
-
 export default TelaCadastro;

@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 import UserContext from "../contexts/UserContext";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
@@ -6,7 +6,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 function Menu() {
 
-    const { percentage } = useContext(UserContext);
+    const { porcentagem } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -18,10 +18,10 @@ function Menu() {
             Hoje </Hoje>
             <Link to={"/hoje"}>
             <CircularProgressbar
-                className="circularBar" value={percentage} 
+                className="circularBar" value={porcentagem} 
                 strokeWidth={10}
                 styles={buildStyles({
-                rotation: 0.25, textSize: '18px',
+                rotation: 0, textSize: '18px',
                 pathTransitionDuration: 0.5,
                 pathColor: `white`, textColor: 'white',
                 trailColor: 'var(--cor-azul-claro)',

@@ -1,17 +1,12 @@
-import { useState, useEffect, useContext } from "react";
-import UserContext from "../contexts/UserContext";
+import { useState, useEffect } from "react";
 import axios from "axios";
-
 import styled from "styled-components";
-
 import Header from "../Layout/Header";
 import HabitoSalvo from "./HabitoSalvo";
 import InserirHabito from "./InserirHabito";
 import Menu from "../Layout/Menu";
 
 function TelaHabitos() {
-
-    const { token, setToken, perfil, setPerfil } = useContext(UserContext);
 
     const tokenLS = localStorage.getItem("token");
 
@@ -38,68 +33,63 @@ function TelaHabitos() {
         const promise = axios.get(API, config);
         promise.then(response => {
             const { data } = response;
-            // console.log("Deu bom");
-            // console.log(data);
             setDadosHabito(data);
         });
-        promise.catch(response => {
-            console.log("Deu ruim");
-        })
+        promise.catch(err => alert(err.response.statusText));
     }, []);
 
     const [visivel, setVisivel] = useState(false);
 
-    return (
-        <>
-            <Header />
-            {visivel ?
-                <Container>
-                    <Subtitle>
-                        <h1>Meus habitos</h1>
-                        <button>+</button>
-                    </Subtitle>
-                    <InserirHabito setVisivel={setVisivel}
-                        habito={habito} setHabito={setHabito}
-                        diasSelecionados={diasSelecionados}
-                        setDiasSelecionados={setDiasSelecionados}
-                    />
-                    {dadosHabito.map(dado => {
-                        return (
-                            <HabitoSalvo key={dado.id} id={dado.id} habito={dado.name}
-                                dias={dado.days} />
-                        )
-                    })}
-                     {dadosHabito.length > 0 ?
-                        <></> :
-                        <Message>
-                            Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
-                        </Message>
-                    }
-                </Container>
-                :
-                <Container>
-                    <Subtitle>
-                        <h1>Meus habitos</h1>
-                        <button onClick={() => setVisivel(true)}>+</button>
-                    </Subtitle>
-                    {dadosHabito.map(dado => {
-                        return (
-                            <HabitoSalvo key={dado.id} id={dado.id} habito={dado.name}
-                                dias={dado.days} />
-                        )
-                    })}
-                    {dadosHabito.length > 0 ?
-                        <></> :
-                        <Message>
-                            Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
-                        </Message>
-                    }
-
-                </Container>
-            }
-            <Menu />
-        </>
-    )
+        return (
+            <>
+                <Header />
+                {visivel ?
+                    <Container>
+                        <Subtitle>
+                            <h1>Meus habitos</h1>
+                            <button>+</button>
+                        </Subtitle>
+                        <InserirHabito setVisivel={setVisivel}
+                            habito={habito} setHabito={setHabito}
+                            diasSelecionados={diasSelecionados}
+                            setDiasSelecionados={setDiasSelecionados}
+                        />
+                        {dadosHabito.map(dado => {
+                            return (
+                                <HabitoSalvo key={dado.id} id={dado.id} habito={dado.name}
+                                    dias={dado.days} />
+                            )
+                        })}
+                        {dadosHabito.length > 0 ?
+                            <></> :
+                            <Message>
+                                Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                            </Message>
+                        }
+                    </Container>
+                    :
+                    <Container>
+                        <Subtitle>
+                            <h1>Meus habitos</h1>
+                            <button onClick={() => setVisivel(true)}>+</button>
+                        </Subtitle>
+                        {dadosHabito.map(dado => {
+                            return (
+                                <HabitoSalvo key={dado.id} id={dado.id} habito={dado.name}
+                                    dias={dado.days} />
+                            )
+                        })}
+                        {dadosHabito.length > 0 ?
+                            <></> :
+                            <Message>
+                                Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                            </Message>
+                        }
+                    </Container>
+                }
+                <Menu />
+            </>
+        )
 }
 
 const Container = styled.div`
@@ -123,7 +113,6 @@ const Subtitle = styled.div`
     padding-top: 22px;
     padding-bottom: 28px;
 
-
         h1 {
             font-size: 23px;
             color: var(--cor-subtitulo);
@@ -140,10 +129,9 @@ const Subtitle = styled.div`
             background-color: var(--cor-azul-claro)
         }
 `
-
 const Message = styled.p`
         font-size: 18px;
         color: var(--cor-cinza-letras)
+        margin-top: 30px;
 `
-
 export default TelaHabitos;

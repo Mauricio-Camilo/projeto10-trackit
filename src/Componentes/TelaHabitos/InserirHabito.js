@@ -1,14 +1,12 @@
 import { useState, useContext } from "react";
 import UserContext from "../contexts/UserContext";
-
-import styled from "styled-components";
-import { Grid } from  'react-loader-spinner';
-
 import axios from "axios";
+import { ThreeDots } from  'react-loader-spinner';
+import styled from "styled-components";
 
 function InserirHabito(props) {
 
-    const loading = <Grid color="#FFFFFF" height={20} width={50} />;
+    const loading = <ThreeDots color="#FFFFFF" />;
 
     const {setVisivel, habito, setHabito, 
     diasSelecionados, setDiasSelecionados} = props;
@@ -49,7 +47,6 @@ function InserirHabito(props) {
             // atualizo o mapa colocando as informações do id e do dia nele.
         }
     }
-
 /* Função criada para colocar os estados em condição de esconder a tela de 
 criar hábitos e reabilitar o botão de + no componente pai de inserir hábitos */
     function resetarHabito() {
@@ -76,8 +73,7 @@ de cancelar, para colocar a tela no estado inicial */
             resetarHabito();
             zerarInputs();
             window.location.reload();
-        }
-        )
+        })
         promise.catch(response => {
             alert("Falha no envio dos dados, por favor tente novamente");
             resetarHabito();
@@ -163,7 +159,6 @@ const Container = styled.div`
             pointer-events: ${(props) => resetarBotao(props.selecionado)};;
         }
 `
-
 const Days = styled.div`
      display: flex;
      gap: 4px;
@@ -183,7 +178,6 @@ const DayWeek = styled.button`
 `
 // Essa props selecionado serve para ver se eu cliquei ou não no dia
 // Quando o botão é clicado, ele chama essa função pata alterar a cor dependendo do clique.
-
 
 const Actions = styled.div`
     display: flex;
@@ -207,10 +201,8 @@ const Button = styled.button`
     opacity: ${(props) => mudarBotao(props.selecionado)};
     pointer-events: ${(props) => resetarBotao(props.selecionado)}; 
 `
-
 const Cancelar = styled.p`
     font-size: 16px;
     color: var(--cor-azul-claro);
 `
 export default InserirHabito;
-

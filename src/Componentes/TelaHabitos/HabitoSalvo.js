@@ -1,13 +1,7 @@
-import { useState, useContext } from "react";
-import UserContext from "../contexts/UserContext";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
-
 function HabitoSalvo(props) {
-
-    const { token, setToken, } = useContext(UserContext);
 
     const tokenLS = localStorage.getItem("token");
 
@@ -16,8 +10,6 @@ function HabitoSalvo(props) {
             "Authorization": `Bearer ${tokenLS}`
         }
     }
-
-    const navigate = useNavigate();
 
     const { id, habito, dias } = props;
 
@@ -31,15 +23,12 @@ function HabitoSalvo(props) {
         const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
         config);
         promise.then (response => {
-            console.log("deu bom");
             window.location.reload();
         });
-        promise.catch(err => {
-            console.log("Deu ruim");
-        })
+        promise.catch(err => alert(err.response.statusText));
     }
         else {
-            return 
+            return <></>
         }   
     }
 
@@ -89,13 +78,11 @@ const Container = styled.div`
 
     }
 `
-
 const Div = styled.div`
     display: flex;
     justify-content: space-between;
     max-width: 340px;
 `
-
 const Icon = styled.button`
     font-size: 20px;
     border: none;
@@ -103,13 +90,11 @@ const Icon = styled.button`
     padding-top: 8px;
     padding-right: 10px;
 `
-
 const Days = styled.div`
     display: flex;
     gap: 4px;
     margin-left: 19px;
 `
-
 const DayWeek = styled.button`
     font-size: 19px;
     color: var(--cor-cinza-borda);
@@ -122,7 +107,4 @@ const DayWeek = styled.button`
     border: 1px solid var(--cor-cinza-borda);
     background-color: ${(props) => corBotao(props.selecionado)};; 
 `
-
-
 export default HabitoSalvo;
-

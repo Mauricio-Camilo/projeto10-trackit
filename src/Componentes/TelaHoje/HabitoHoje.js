@@ -1,14 +1,12 @@
-import { useState, useContext } from "react";
-import UserContext from "../contexts/UserContext";
+import { useState } from "react";
 import axios from "axios";
-
-
 import styled from "styled-components";
 
 function HabitoHoje(props) {
 
     const { habito, contagemAtual, contagemRecorde,
-        id, status, concluidos, setConcluidos } = props;
+        id, status, concluidos, setConcluidos,
+        } = props;
 
     const tokenLS = localStorage.getItem("token");
 
@@ -19,32 +17,24 @@ function HabitoHoje(props) {
     }
 
     function marcarHabito() {
-        console.log("entrei em marcar habito");
-        console.log(iconeSelecionado);
         setAtual(atual + 1);
         setConcluidos(concluidos + 1);
         const promise = axios.post(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,
             {}, config)
-        promise.then(response => {
-            const { data } = response;
-            console.log("Deu bom");
-        })
+        promise.then(response => {console.log(response.data);
+        });
         promise.catch(err => console.log(err.response.statusText));
     }
 
     function desmarcarHabito() {
-        console.log("entrei em desmarcar habito");
-        console.log(iconeSelecionado);
         setAtual(atual - 1);
         setConcluidos(concluidos - 1);
         const promise = axios.post(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
             {}, config)
-        promise.then(response => {
-            const { data } = response;
-            console.log("Deu bom");
-        })
+        promise.then(response => {console.log(response.data);
+        });
         promise.catch(err => console.log(err.response.statusText));
     }
 
@@ -67,8 +57,9 @@ function HabitoHoje(props) {
     const [atual, setAtual] = useState(contagemAtual);
     const [recorde, setRecorde] = useState(contagemRecorde);
 
-    return (
+    console.log(status);
 
+    return (
         <Container>
             {!status ?
                 <>             
@@ -94,7 +85,7 @@ function HabitoHoje(props) {
                 <div>
                     <h1>{habito}</h1>
                     <Atual selecionado={!iconeSelecionado}>
-                        Sequência atual: <span> {atual}
+                        Sequência atual: <span> {atual+1}
                             {atual === 1 ? " dia" : " dias"}
                         </span>
                     </Atual>
@@ -135,6 +126,7 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     padding-left: 10px;
+    padding-bottom: 17px;
     margin: 10px 0;
     margin-left: 18px;
     background-color: #FFFFFF;
@@ -145,7 +137,6 @@ const Container = styled.div`
         padding-top: 13px;
         padding-left: 15px;
         margin-bottom: 7px;
-
     }
 `
 const Atual = styled.p`
@@ -165,7 +156,6 @@ const Recorde = styled.p`
     span {
         color: ${(props) => corRecorde(props.atual, props.recorde)};
 `
-
 const Icon = styled.button`
     font-size: 69px;
     background-color: #FFFFFF;

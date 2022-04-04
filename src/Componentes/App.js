@@ -9,18 +9,18 @@ import TelaHistorico from "./TelaHistorico";
 
 function App() {
 
-    const [token, setToken] = useState(""); // Verificar se existe o token no local storage
+    const [token, setToken] = useState(""); 
     const [perfil, setPerfil] = useState("");
-    const [percentage, setPercentage] = useState("");
 
-    const [atual, setAtual] = useState(0);
-    const [recorde, setRecorde] = useState(0);
+// Estados usados na tela hoje e menu
+    const [porcentagem, setPorcentagem] = useState(0);
+    const [habitosHoje, setHabitosHoje] = useState([]);
+    const [habitosConcluidos, setHabitosConcluidos] = useState(0);
 
-    const context = {token, setToken, perfil, setPerfil, percentage, setPercentage,
-                    atual, setAtual, recorde, setRecorde };
-
-    // const tokenLS = localStorage.setItem("token", token);
-
+    const context = {token, setToken, perfil, setPerfil, porcentagem, setPorcentagem,
+        habitosHoje, setHabitosHoje, habitosConcluidos, setHabitosConcluidos,
+        };
+        
     return (
         <UserContext.Provider value={context}>
             <BrowserRouter>

@@ -1,9 +1,8 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import styled from "styled-components";
 import dayjs from "dayjs";
-
 import Header from "../Layout/Header";
 import Menu from "../Layout/Menu";
 import HabitoHoje from "./HabitoHoje";
@@ -19,17 +18,13 @@ function TelaHoje() {
       ]
     })
   
-    const dataBR = dayjs().format('dddd, DD/MM')
+    const dataBR = dayjs().format('dddd, DD/MM');
 
-    const { token, setPercentage, atual, 
-            setAtual, recorde, setRecorde } = useContext(UserContext);
+    const { porcentagem, setPorcentagem,
+        habitosHoje, setHabitosHoje, 
+        habitosConcluidos, setHabitosConcluidos} = useContext(UserContext);
 
     const tokenLS = localStorage.getItem("token");
-
-    // Estado que guarda os habitos que vieram da API
-    const [habitosHoje, setHabitosHoje] = useState([]);
-
-    const [habitosConcluidos, setHabitosConcluidos] = useState(0);
 
     const API = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
 
@@ -43,53 +38,44 @@ function TelaHoje() {
         const promise = axios.get(API, config);
         promise.then(response => {
             const { data } = response;
-            console.log("Deu bom");
-            console.log(data);
             setHabitosHoje(data);
-            // console.log(habitosHoje);
         });
-        promise.catch(response => {
-            console.log("Deu ruim");
-        })
+        promise.catch(err => console.log(err.response.statusText));
     }, []);
 
-    // console.log(habitosConcluidos)
+    setPorcentagem(parseInt((habitosConcluidos / habitosHoje.length) * 100));
 
-    let resultado = 0;
-    resultado = parseInt((habitosConcluidos / habitosHoje.length) * 100);
-    setPercentage(resultado);
-    return (
-        <>
-            <Header />
-            <Container>
-                <Today>{dataBR}</Today>
-                {resultado === 0 ?
-                    <Nohabits>Nenhum hábito concluído ainda</Nohabits>:
-                    <Hashabits>{resultado}% dos hábitos concluídos</Hashabits>
-                }
-                {habitosHoje.map(habito => {
-                    const { id, name, done, currentSequence, highestSequence } = habito;
-                    // setAtual(currentSequence);
-                    // setRecorde(highestSequence);
-                    return (
-                        <HabitoHoje key={id} habito={name} id={id} status={done}
-                            contagemAtual={currentSequence} contagemRecorde={highestSequence}
-                            concluidos={habitosConcluidos}
-                            setConcluidos={(valor) => setHabitosConcluidos(valor)} />
-                    )
-                })
-                }
-            </Container>
-            <Menu />
-        </>
-    )
+        return (
+            <>
+                <Header />
+                <Container>
+                    <Today>{dataBR}</Today>
+                    {porcentagem <= 0 ?
+                        <Nohabits>Nenhum hábito concluído ainda</Nohabits>:
+                        <Hashabits>{porcentagem}% dos hábitos concluídos</Hashabits>    
+                    }
+                    {habitosHoje.map(habito => {
+                        const { id, name, done, currentSequence, highestSequence } = habito;
+                        return (
+                            <HabitoHoje key={id} habito={name} id={id} status={done}
+                                contagemAtual={currentSequence} contagemRecorde={highestSequence}
+                                concluidos={habitosConcluidos} 
+                                setConcluidos={(valor) => setHabitosConcluidos(valor)} />
+                        )
+                    })
+                    }
+                </Container>
+                <Menu />
+            </>
+        )
 }
-
 
 const Container = styled.div`
     background-color: #E5E5E5;
     width: 375px;
-    height: 597px;
+    min-height: 94px;
+    height: 100%;
+    min-height: 677px;
     padding-bottom: 100px;
     margin: 70px 0;
 `
@@ -105,7 +91,6 @@ const Nohabits = styled.p`
     color: var(--cor-cinza-hoje);
     margin-left: 18px;
 `
-
 const Hashabits = styled.p`
     font-size: 18px;
     color: var(--cor-verde);
